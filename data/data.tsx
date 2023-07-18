@@ -8,9 +8,9 @@ import {
     QuestionMarkCircledIcon,
     StopwatchIcon,
   } from "@radix-ui/react-icons"
-import { UserCircle, UserCircle2Icon } from "lucide-react"
+import { UserCircle, UserCircle2Icon, AlarmClock } from "lucide-react"
   
-  export const titles = [
+export const titles = [
     {
       label: "Directeur",
       value: "directeur",
@@ -21,4 +21,12 @@ import { UserCircle, UserCircle2Icon } from "lucide-react"
       value: "normal",
       icon: CircleIcon,
     }
+]
+
+export const motifs = [
+    {
+      label: "Rendez-vous",
+      value: "rdv",
+      icon: AlarmClock,
+    },
 ]
