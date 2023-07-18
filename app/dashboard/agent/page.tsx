@@ -4,8 +4,8 @@ import { Metadata } from "next"
 import Image from "next/image"
 import { z } from "zod"
 
-import { columns } from "@/components/table/columns"
-import { DataTable } from "@/components/table/data-table"
+import { columns } from "./columns"
+import { DataTable } from "./data-table"
 import { agentSchema } from "@/data/schema"
 
 export const metadata: Metadata = {

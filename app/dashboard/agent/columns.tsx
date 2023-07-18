@@ -1,13 +1,10 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-
-import { Checkbox } from "@/components/ui/checkbox"
-
 import { titles } from "@/data/data"
 import { Agent } from "@/data/schema"
-import { DataTableColumnHeader } from "./data-table-column-header"
-import { DataTableRowActions } from "./data-table-row-actions"
+import { DataTableColumnHeader } from "@/components/table/data-table-column-header"
+import { DataTableRowActions } from "@/components/table/data-table-row-actions"
 
 export const columns: ColumnDef<Agent>[] = [
   {
