@@ -8,59 +8,17 @@ import {
     QuestionMarkCircledIcon,
     StopwatchIcon,
   } from "@radix-ui/react-icons"
-  
-  export const labels = [
-    {
-      value: "bug",
-      label: "Bug",
-    },
-    {
-      value: "feature",
-      label: "Feature",
-    },
-    {
-      value: "documentation",
-      label: "Documentation",
-    },
-  ]
-  
-  export const statuses = [
-    {
-      value: "backlog",
-      label: "Backlog",
-      icon: QuestionMarkCircledIcon,
-    },
-    {
-      value: "todo",
-      label: "Todo",
-      icon: CircleIcon,
-    },
-    {
-      value: "in progress",
-      label: "In Progress",
-      icon: StopwatchIcon,
-    },
-    {
-      value: "done",
-      label: "Done",
-      icon: CheckCircledIcon,
-    },
-    {
-      value: "canceled",
-      label: "Canceled",
-      icon: CrossCircledIcon,
-    },
-  ]
+import { UserCircle, UserCircle2Icon } from "lucide-react"
   
   export const titles = [
     {
       label: "Directeur",
       value: "directeur",
-      icon: ArrowDownIcon,
+      icon: UserCircle2Icon,
     },
     {
       label: "Normal",
       value: "normal",
-      icon: ArrowRightIcon,
+      icon: CircleIcon,
     }
 ]
