@@ -5,24 +5,25 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { TopWorkHour } from "@/components/topWorkHour"
-import { TopAttendance } from "@/components/topAttendance"
-import { LogIn, LogOut, PersonStanding, Users } from "lucide-react"
-import { OverviewYearWorkingHour } from "./overviewYearWorkingHour"
+import { Hourglass, LogIn, PersonStanding, Sunrise } from "lucide-react"
+import { WorkingHourRange } from "./workingHourRange"
+import { AttendanceRange } from "./attendanceRange"
 
-export function Overview() {
+export function Analytics() {
     return (
         <>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Total Agents
+                      Attendances
                     </CardTitle>
-                    <Users className="text-green-400" />
+                    <LogIn className="text-green-400" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">48</div>
+                    <div className="text-2xl font-bold">
+                        60 %
+                    </div>
                     <p className="text-xs text-muted-foreground">
                       +20.1% from last month
                     </p>
@@ -31,65 +32,71 @@ export function Overview() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Present today
+                      Working hours
                     </CardTitle>
-                    <LogIn className="text-green-400" />
+                    <Hourglass className="text-green-400" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">40</div>
+                    <div className="text-2xl font-bold">
+                        300 Hours
+                    </div>
                     <p className="text-xs text-muted-foreground">
-                      -10.0% from yesterday
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Absent today</CardTitle>
-                    <LogOut className="text-green-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">8</div>
-                    <p className="text-xs text-muted-foreground">
-                      +10.0% from yesterday
+                      -10.0% from last month
                     </p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Visit today
+                        Visit
                     </CardTitle>
                     <PersonStanding className="text-green-400" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">573</div>
+                    <div className="text-2xl font-bold">
+                        680
+                    </div>
                     <p className="text-xs text-muted-foreground">
-                      +20 from yesterday
+                      +15.0% from last month
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Working days
+                    </CardTitle>
+                    <Sunrise className="text-green-400" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">20</div>
+                    <p className="text-xs text-muted-foreground">
+                      working days
                     </p>
                   </CardContent>
                 </Card>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <Card className="col-span-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+                <Card className="col-span-3">
                   <CardHeader>
-                    <CardTitle>Overview</CardTitle>
+                    <CardTitle>Attendances</CardTitle>
                     <CardDescription>
-                        Working hours for this year.
+                      Attendances for the selected range.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pl-2">
-                    <OverviewYearWorkingHour />
+                    <AttendanceRange />
                   </CardContent>
                 </Card>
                 <Card className="col-span-3">
                   <CardHeader>
-                    <CardTitle>Top 6 Attendant</CardTitle>
+                    <CardTitle>Working hours</CardTitle>
                     <CardDescription>
-                      For the last 30 days.
+                      Working hours for the selected range.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <TopAttendance />
+                    <WorkingHourRange />
                   </CardContent>
                 </Card>
             </div>

@@ -2,13 +2,7 @@ import { Metadata } from "next"
 import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+
 import {
   Tabs,
   TabsContent,
@@ -17,10 +11,7 @@ import {
 } from "@/components/ui/tabs"
 import { CalendarDateRangePicker } from "@/components/ui/calendarDateRangePicker"
 import { Overview } from "@/components/overview"
-import { TopWorkHour } from "@/components/topWorkHour"
-import { TopAttendance } from "@/components/topAttendance"
-import { UserNav } from "@/components/userNav"
-import { LogIn, LogOut, PersonStanding, Users, X } from "lucide-react"
+import { Analytics } from "@/components/analytics"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -43,89 +34,18 @@ export default function DashboardPage() {
           </div>
           <Tabs defaultValue="overview" className="space-y-4">
             <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="analytics" disabled>
+              <TabsTrigger value="overview">
+                Overview
+              </TabsTrigger>
+              <TabsTrigger value="analytics">
                 Analytics
               </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      Total Agents
-                    </CardTitle>
-                    <Users className="text-green-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">48</div>
-                    <p className="text-xs text-muted-foreground">
-                      +20.1% from last month
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      Present today
-                    </CardTitle>
-                    <LogIn className="text-green-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">40</div>
-                    <p className="text-xs text-muted-foreground">
-                      -10.0% from yesterday
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Absent today</CardTitle>
-                    <LogOut className="text-green-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">8</div>
-                    <p className="text-xs text-muted-foreground">
-                      +10.0% from yesterday
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                      Visit today
-                    </CardTitle>
-                    <PersonStanding className="text-green-400" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">573</div>
-                    <p className="text-xs text-muted-foreground">
-                      +20 from yesterday
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <Card className="col-span-4">
-                  <CardHeader>
-                    <CardTitle>Overview</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pl-2">
-                    <Overview />
-                  </CardContent>
-                </Card>
-                <Card className="col-span-3">
-                  <CardHeader>
-                    <CardTitle>Top 6 Attendant</CardTitle>
-                    <CardDescription>
-                      For the last 30 days.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <TopAttendance />
-                  </CardContent>
-                </Card>
-              </div>
+              <Overview />
+            </TabsContent>
+            <TabsContent value="analytics" className="space-y-4">
+              <Analytics />
             </TabsContent>
           </Tabs>
         </div>
