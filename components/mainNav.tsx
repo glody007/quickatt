@@ -12,6 +12,7 @@ export function MainNav() {
                     <ul className="flex space-x-8 ">
                         <li className="text-green-400 py-4 border-b-4 border-b-green-400">Dashboard</li>
                         <li className="text-slate-200 py-4">Agents</li>
+                        <li className="text-slate-200 py-4">Visites</li>
                         <li className="text-slate-200 py-4">Horaires</li>
                     </ul>
                 </div>

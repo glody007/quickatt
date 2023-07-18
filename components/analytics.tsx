@@ -5,7 +5,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { Hourglass, LogIn, PersonStanding, Sunrise } from "lucide-react"
+import { Hourglass, ListChecks, Sunrise, UserCog } from "lucide-react"
 import { WorkingHourRange } from "./workingHourRange"
 import { AttendanceRange } from "./attendanceRange"
 
@@ -18,7 +18,7 @@ export function Analytics() {
                     <CardTitle className="text-sm font-medium">
                       Attendances
                     </CardTitle>
-                    <LogIn className="text-green-400" />
+                    <ListChecks className="text-green-400" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
@@ -48,9 +48,9 @@ export function Analytics() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                        Visit
+                        Visites
                     </CardTitle>
-                    <PersonStanding className="text-green-400" />
+                    <UserCog className="text-green-400" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">

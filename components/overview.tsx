@@ -5,9 +5,8 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { TopWorkHour } from "@/components/topWorkHour"
 import { TopAttendance } from "@/components/topAttendance"
-import { LogIn, LogOut, PersonStanding, Users } from "lucide-react"
+import { LayoutList, ListChecks, UserCog, Users } from "lucide-react"
 import { OverviewYearWorkingHour } from "./overviewYearWorkingHour"
 
 export function Overview() {
@@ -31,9 +30,9 @@ export function Overview() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Present today
+                      Attendance today
                     </CardTitle>
-                    <LogIn className="text-green-400" />
+                    <ListChecks className="text-green-400" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">40</div>
@@ -44,8 +43,10 @@ export function Overview() {
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Absent today</CardTitle>
-                    <LogOut className="text-green-400" />
+                    <CardTitle className="text-sm font-medium">
+                        Absent today
+                    </CardTitle>
+                    <LayoutList className="text-green-400" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">8</div>
@@ -59,7 +60,7 @@ export function Overview() {
                     <CardTitle className="text-sm font-medium">
                       Visit today
                     </CardTitle>
-                    <PersonStanding className="text-green-400" />
+                    <UserCog className="text-green-400" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">573</div>
