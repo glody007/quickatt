@@ -1,3 +1,4 @@
+import HolidayHeader from "@/components/holidayHeader"
 import LegendList from "@/components/legendList"
 import { Calendar } from "@/components/ui/calendar"
 import { Separator } from "@/components/ui/separator"
@@ -22,7 +23,8 @@ export default async function SchedulePage() {
 
         </div>
         <div className="flex-[0.3] h-full border-l">
-
+            <HolidayHeader className="px-4 py-2" />
+            <Separator />
         </div>
     </div>
   )
