@@ -1,4 +1,3 @@
-import { activities } from "@/data/data";
 import { cn } from "@/lib/utils";
 import { MoreHorizontal, Plus } from "lucide-react";
 import { HtmlHTMLAttributes } from "react";

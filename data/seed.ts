@@ -2,7 +2,7 @@ import fs from "fs"
 import path from "path"
 import { faker } from "@faker-js/faker"
 import { titles } from "./data"
-import { Agent, Visit } from "./schema"
+import { Agent, Holiday, Visit } from "./schema"
 
 const agents: Array<Agent> = Array.from({ length: 100 }, () => ({
   id: faker.string.uuid(),
@@ -22,6 +22,13 @@ const visits: Array<Visit> = Array.from({ length: 100 }, () => ({
     exitTime: faker.date.birthdate()
 }))
 
+const holidays: Array<Holiday> = Array.from({ length: 10 }, () => ({
+  id: faker.string.uuid(),
+  name: faker.internet.userName(),
+  date: faker.date.birthdate(),
+  image: faker.image.avatar(),
+}))
+
 fs.writeFileSync(
   path.join(__dirname, "agents.json"),
   JSON.stringify(agents, null, 2)
@@ -32,4 +39,9 @@ fs.writeFileSync(
     JSON.stringify(visits, null, 2)
 )
 
-console.log("✅ Agents and Visits data generated.")
+fs.writeFileSync(
+  path.join(__dirname, "holidays.json"),
+  JSON.stringify(holidays, null, 2)
+)
+
+console.log("✅ Agents Visits and holidays data generated.")
