@@ -16,6 +16,10 @@ const getHourFromIndex = (index: number) => {
 const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 const hours = Array.from({ length: 24 }, (value, index) =>  getHourFromIndex(index));
 
+const HOUR_SUBS = 1
+const GRID_ROWS = hours.length * HOUR_SUBS
+const GRID_COLUMNS = days.length
+
 export default function Schedule({ className }: Props) {
 
     return (
@@ -37,27 +41,32 @@ export default function Schedule({ className }: Props) {
                     );
                 })}
             </div>
-            <div className="w-full h-screen overflow-scroll pb-32">
-                {hours.map((hour, idx) => (
-                    <div key={idx} className="grid grid-cols-7 place-items-center">
-                        {days.map((day, idx) => {
+            <div className={cn(
+                `grid grid-cols-${GRID_COLUMNS} grid-row-${GRID_ROWS} place-items-center`,
+                "h-full overflow-scroll pb-32"
+            )}>
+                {hours.map((hour, rowIdx) => (
+                    <>
+                        {days.map((day, colIdx) => {
                             return (
                                 <div 
-                                    key={idx} 
+                                    key={colIdx} 
                                     className={cn(
                                         "w-full flex justify-center border-b py-6",
-                                        {"border-r": idx !== 6}
+                                        `col-start-${colIdx + 1} col-span-1`, // Column start at one
+                                        `row-start-${rowIdx + 1} row-span-1`, // row start at one
+                                        {"border-r": colIdx !== GRID_COLUMNS - 1} // No border to the last column
                                     )}
                                 >
-                                    <div key={idx} className="text-xs">
+                                    <div className="text-xs">
                                         {hour}
                                     </div>
                                 </div>
                             );
                         })}
-                    </div>
+                    </>
                 ))}
-            </div> 
+            </div>
         </div>
     )
 }
