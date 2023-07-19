@@ -13,7 +13,7 @@ export function MainNav() {
                         <li className="text-green-400 py-4 border-b-4 border-b-green-400">Dashboard</li>
                         <li className="text-slate-200 py-4">Agents</li>
                         <li className="text-slate-200 py-4">Visites</li>
-                        <li className="text-slate-200 py-4">Horaires</li>
+                        <li className="text-slate-200 py-4">Horaire</li>
                     </ul>
                 </div>
                 <div>

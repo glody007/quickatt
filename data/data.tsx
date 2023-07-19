@@ -8,7 +8,7 @@ import {
     QuestionMarkCircledIcon,
     StopwatchIcon,
   } from "@radix-ui/react-icons"
-import { UserCircle, UserCircle2Icon, AlarmClock } from "lucide-react"
+import { UserCircle, UserCircle2Icon, AlarmClock, Briefcase, Pizza } from "lucide-react"
   
 export const titles = [
     {
@@ -29,4 +29,28 @@ export const motifs = [
       value: "rdv",
       icon: AlarmClock,
     },
+]
+
+export const activities = [
+  {
+    label: "Work",
+    value: "work",
+    color: "#93c5fd",
+    bg: "bg-blue-300",
+    icon: Briefcase,
+  },
+  {
+    label: "Break",
+    value: "break",
+    color: "#86efac",
+    bg: "bg-green-300",
+    icon: Pizza,
+  },
+  {
+    label: "Holiday",
+    value: "holiday",
+    color: "#a855f7",
+    bg: "bg-purple-500",
+    icon: Pizza,
+  },
 ]
