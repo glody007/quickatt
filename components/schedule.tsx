@@ -1,3 +1,4 @@
+import { activities } from "@/data/data";
 import { Schedule } from "@/data/schema";
 import { cn } from "@/lib/utils";
 import { HtmlHTMLAttributes } from "react";
@@ -7,17 +8,16 @@ interface Props extends HtmlHTMLAttributes<HTMLDivElement> {
 }
 
 const getHourFromIndex = (index: number) => {
-    const pos = index + 1
-    const hour = pos % 12
-    if(pos === 12) return `12 AM`
+    const hour = index % 12
+    if(index === 12) return `12 AM`
     if(index < 12) return `${hour} AM`
     return `${hour} PM`
 }
 
 const days = ["", "mon", "tue", "wed", "thu", "fri", "sat", "sun"];
-const hours = Array.from({ length: 25  }, (value, index) =>  getHourFromIndex(index));
+const hours = Array.from({ length: 24  }, (value, index) =>  getHourFromIndex(index));
 
-const HOUR_SUBS = 1
+const HOUR_SUBS = 6
 const GRID_ROWS = hours.length * HOUR_SUBS
 const GRID_COLUMNS = days.length
 
@@ -26,22 +26,22 @@ const scheduleData: Array<Schedule> = [
         id: "1",
         day: "wed",
         activity: "work",
-        startTime: "8",
-        endTime: "12"
+        startTime: "1",
+        endTime: "5"
     },
     {
         id: "2",
         day: "mon",
-        activity: "work",
-        startTime: "13",
-        endTime: "17"
+        activity: "break",
+        startTime: "5",
+        endTime: "6"
     },
     {
         id: "3",
         day: "fri",
-        activity: "break",
-        startTime: "12",
-        endTime: "13"
+        activity: "work",
+        startTime: "6",
+        endTime: "10"
     },
 ]
 
@@ -64,13 +64,26 @@ const rowSpanClasses = [
     "row-span-1", "row-span-2", "row-span-3", "row-span-4", "row-span-5", "row-span-6", "row-span-7", "row-span-8", "row-span-9", "row-span-10", "row-span-11", "row-span-12", "row-span-13", "row-span-14", "row-span-15", "row-span-16", "row-span-17", "row-span-18", "row-span-19", "row-span-20", "row-span-21", "row-span-22", "row-span-23", "row-span-24", "row-span-25", "row-span-26", "row-span-27", "row-span-28", "row-span-29", "row-span-30", "row-span-31", "row-span-32", "row-span-33", "row-span-34", "row-span-35", "row-span-36", "row-span-37", "row-span-38", "row-span-39", "row-span-40", "row-span-41", "row-span-42", "row-span-43", "row-span-44", "row-span-45", "row-span-46", "row-span-47", "row-span-48", "row-span-49", "row-span-50", "row-span-51", "row-span-52", "row-span-53", "row-span-54", "row-span-55", "row-span-56", "row-span-57", "row-span-58", "row-span-59", "row-span-60", "row-span-61", "row-span-62", "row-span-63", "row-span-64", "row-span-65", "row-span-66", "row-span-67", "row-span-68", "row-span-69", "row-span-70", "row-span-71", "row-span-72", "row-span-73", "row-span-74", "row-span-75", "row-span-76", "row-span-77", "row-span-78", "row-span-79", "row-span-80", "row-span-81", "row-span-82", "row-span-83", "row-span-84", "row-span-85", "row-span-86", "row-span-87", "row-span-88", "row-span-89", "row-span-90", "row-span-91", "row-span-92", "row-span-93", "row-span-94", "row-span-95", "row-span-96", "row-span-97", "row-span-98", "row-span-99", "row-span-100", "row-span-101", "row-span-102", "row-span-103", "row-span-104", "row-span-105", "row-span-106", "row-span-107", "row-span-108", "row-span-109", "row-span-110", "row-span-111", "row-span-112", "row-span-113", "row-span-114", "row-span-115", "row-span-116", "row-span-117", "row-span-118", "row-span-119", "row-span-120", "row-span-121", "row-span-122", "row-span-123", "row-span-124", "row-span-125", "row-span-126", "row-span-127", "row-span-128", "row-span-129", "row-span-130", "row-span-131", "row-span-132", "row-span-133", "row-span-134", "row-span-135", "row-span-136", "row-span-137", "row-span-138", "row-span-139", "row-span-140", "row-span-141", "row-span-142", "row-span-143", "row-span-144"
 ]
 
+const activityColorMap = {
+    "work": "bg-blue-300",
+    "break": "bg-green-300",
+    "holiday": "bg-purple-300"
+}
+
+const activityEmojiMap = {
+    "work": "💼",
+    "break": "🥘",
+    "holiday": "🩴"
+}
+
 const getColConfigFromSchedule = (schedule: Schedule) => {
     return colStartClasses[days.indexOf(schedule.day)]
 }
 
 const getRowConfigSchedule = (schedule: Schedule) => {
-    const rowStart = parseInt(schedule.startTime)
-    const rowSpan = parseInt(schedule.endTime) - parseInt(schedule.startTime) - 1
+    const rowStart = parseInt(schedule.startTime) * HOUR_SUBS - 4
+    const rowSpan = (parseInt(schedule.endTime) - parseInt(schedule.startTime)) * HOUR_SUBS - 1
+    console.log(rowStart)
     return `${rowStartClasses[rowStart]} ${rowSpanClasses[rowSpan]}`
 }
 
@@ -93,8 +106,9 @@ export default function WeekSchedule({ className }: Props) {
                     return (
                         <div key={idx} className={cn(
                             "w-full flex justify-center border-b pt-5 pb-1 h-10",
+                            "sticky top-0 bg-white",
                             `${colStartClasses[idx]} col-span-1`, // Column start at one and span one col
-                            `row-start-1 row-span-1`, // row start at one and span one row
+                            `row-start-1 ${rowSpanClasses[HOUR_SUBS]}`, // row start at one and span one row
                             {"border-b-2 border-b-green-400" : idx === 3},
                             {"border-r" : idx === 0}
                         )}>
@@ -114,12 +128,13 @@ export default function WeekSchedule({ className }: Props) {
                                         className={cn(
                                             "w-full h-full flex justify-center border-b py-6",
                                             `${colStartClasses[colIdx]} col-span-1`, // Column start at one and span one col
-                                            `${rowStartClasses[rowIdx]} row-span-1`, // row start at one and span one row
+                                            `${rowStartClasses[rowIdx * (HOUR_SUBS - 1)]} ${rowSpanClasses[HOUR_SUBS]}`, // row start at one and span one row
                                             {"border-r": colIdx !== GRID_COLUMNS - 1} // No border to the last column
                                         )}
                                     >
                                         <div className="text-xs">
-                                            {colIdx}-{rowIdx}
+                                            {(colIdx === 0 && rowIdx !== 0) && getHourFromIndex(rowIdx)}
+                                            {(colIdx === 0 && rowIdx === 0) && getHourFromIndex(24)}
                                         </div>
                                     </div>
                                 );
@@ -131,15 +146,18 @@ export default function WeekSchedule({ className }: Props) {
                     <div 
                         key={idx} 
                         className={cn(
-                            "w-full h-full flex justify-center items-center border-b",
+                            "w-full h-full flex justify-center items-center",
                             "place-items-center",
                             getColConfigFromSchedule(schedule),
                             getRowConfigSchedule(schedule)
                         )}
                     >
-                        <div className="w-[96%] h-[99%] flex justify-center rounded-lg py-4 bg-blue-300">
+                        <div className={cn(
+                            "w-[96%] h-[99%] flex justify-center rounded-lg py-4",
+                            activityColorMap[schedule.activity]
+                        )}>
                             <div className="text-xs">
-                                {schedule.activity}
+                                {activityEmojiMap[schedule.activity]} {schedule.activity}
                             </div>
                         </div>
                     </div>

@@ -31,6 +31,8 @@ export const motifs = [
     },
 ]
 
+export type activityTypes = "work" | "break" | "holiday"
+
 export const activities = [
   {
     label: "Work",

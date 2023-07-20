@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { activities } from "./data"
 
 export const agentSchema = z.object({
   id: z.string(),
@@ -28,7 +29,7 @@ export const holidaySchema = z.object({
 export const scheduleSchema = z.object({
   id: z.string(),
   day: z.string(),
-  activity: z.string(),
+  activity: z.enum(["work", "holiday", "break"]),
   startTime: z.string(),
   endTime: z.string()
 })
