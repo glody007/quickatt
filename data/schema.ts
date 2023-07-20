@@ -25,8 +25,18 @@ export const holidaySchema = z.object({
   image: z.string(),
 })
 
+export const scheduleSchema = z.object({
+  id: z.string(),
+  day: z.string(),
+  activity: z.string(),
+  startTime: z.string(),
+  endTime: z.string()
+})
+
 export type Agent = z.infer<typeof agentSchema>
 
 export type Visit = z.infer<typeof visitSchema>
 
 export type Holiday = z.infer<typeof holidaySchema>
+
+export type Schedule = z.infer<typeof scheduleSchema>
