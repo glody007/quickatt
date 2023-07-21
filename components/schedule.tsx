@@ -83,7 +83,6 @@ const getColConfigFromSchedule = (schedule: Schedule) => {
 const getRowConfigSchedule = (schedule: Schedule) => {
     const rowStart = parseInt(schedule.startTime) * HOUR_SUBS - 4
     const rowSpan = (parseInt(schedule.endTime) - parseInt(schedule.startTime)) * HOUR_SUBS - 1
-    console.log(rowStart)
     return `${rowStartClasses[rowStart]} ${rowSpanClasses[rowSpan]}`
 }
 
