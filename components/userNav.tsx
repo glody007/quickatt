@@ -14,8 +14,15 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+  import { useRouter } from "next/navigation"
   
   export function UserNav() {
+    const router = useRouter()
+
+    const logOut = () => {
+      router.push('/')
+    }
+
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -31,7 +38,7 @@ import {
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">shadcn</p>
               <p className="text-xs leading-none text-muted-foreground">
-                m@example.com
+                admin@gmail.com
               </p>
             </div>
           </DropdownMenuLabel>
@@ -49,10 +56,9 @@ import {
               Settings
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem>New Team</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={logOut}>
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
