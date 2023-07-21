@@ -20,7 +20,7 @@ export const visitSchema = z.object({
 })
 
 export const holidaySchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string(),
   date: z.coerce.date(),
   image: z.string(),

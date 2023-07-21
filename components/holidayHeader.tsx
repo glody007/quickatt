@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { MoreHorizontal, Plus } from "lucide-react";
 import { HtmlHTMLAttributes } from "react";
+import AddHoliday from "./addHoliday";
 import { Button } from "./ui/button";
 
 interface Props extends HtmlHTMLAttributes<HTMLDivElement> {
@@ -17,9 +18,7 @@ export default function HolidayHeader({ className }: Props) {
                 Holiday
             </p>
             <div className="flex items-center">
-                <Button variant="ghost" className="h-6 p-1">
-                    <Plus className="w-4" />
-                </Button>
+                <AddHoliday />
                 <Button variant="ghost" className="h-6 p-1">
                     <MoreHorizontal className="w-4" />
                 </Button>
