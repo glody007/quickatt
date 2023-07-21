@@ -90,31 +90,6 @@ export default function ScheduleForm({ handleSuccess, schedule }: ScheduleFormPr
 
                         <FormField
                             control={form.control}
-                            name="activity"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Activity</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select an activity" />
-                                        </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {activities.map(activity => (
-                                                <SelectItem key={activity} value={activity}>
-                                                    {activity}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
                             name="startTime"
                             render={({ field }) => (
                                 <FormItem>
@@ -136,6 +111,31 @@ export default function ScheduleForm({ handleSuccess, schedule }: ScheduleFormPr
                                     <FormControl>
                                         <Input placeholder="5:00 PM" {...field} />
                                     </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="activity"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Activity</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select an activity" />
+                                        </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {activities.map(activity => (
+                                                <SelectItem key={activity} value={activity}>
+                                                    {activity}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                     <FormMessage />
                                 </FormItem>
                             )}
