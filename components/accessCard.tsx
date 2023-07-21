@@ -39,7 +39,7 @@ export function AccessCard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button>Save</Button>
+            <Button className="bg-green-600 hover:bg-green-400">Save</Button>
           </CardFooter>
         </Card>
       </TabsContent>
@@ -66,7 +66,7 @@ export function AccessCard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button>Save</Button>
+            <Button className="bg-green-600 hover:bg-green-400">Save</Button>
           </CardFooter>
         </Card>
       </TabsContent>

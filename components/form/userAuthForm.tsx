@@ -40,7 +40,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               disabled={isLoading}
             />
           </div>
-          <Button disabled={isLoading}>
+          <Button disabled={isLoading} className="bg-green-600 hover:bg-green-400">
             {isLoading && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
