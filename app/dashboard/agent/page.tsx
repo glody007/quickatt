@@ -6,6 +6,9 @@ import { z } from "zod"
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 import { agentSchema } from "@/data/schema"
+import { Button } from "@/components/ui/button"
+import { Plus } from "lucide-react"
+import AddAgent from "@/components/addAgent"
 
 export const metadata: Metadata = {
   title: "Agents",
@@ -41,7 +44,7 @@ export default async function AgentPage() {
                     </p>
                 </div>
                 <div className="flex items-center space-x-2">
-                    
+                  <AddAgent />
                 </div>
             </div>
             <DataTable data={agents} columns={columns} />

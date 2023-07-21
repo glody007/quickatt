@@ -2,7 +2,7 @@ import { z } from "zod"
 import { activities } from "./data"
 
 export const agentSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string(),
   email: z.string(),
   number: z.string(),
