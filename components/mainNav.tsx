@@ -42,9 +42,9 @@ export function MainNav() {
         <div className="flex justify-center bg-slate-900 border-b w-full">
             <div className="w-full px-6 text-white flex justify-between items-center">
                 <div className="flex space-x-8 items-center">
-                    <h1 className="text-3xl font-semibold">
+                    <Link href="/access" className="text-3xl font-semibold">
                         <span className="w-4 h-4 bg-green-400 rounded-lg">Quick</span>att
-                    </h1>
+                    </Link>
                     <ul className="flex">
                         {items.map((item) => (
                             <li 
