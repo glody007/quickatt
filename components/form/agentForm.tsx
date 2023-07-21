@@ -107,11 +107,11 @@ export default function AgentForm({ handleSuccess, agent }: AgentFormProps) {
                             name="title"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Role</FormLabel>
+                                    <FormLabel>Title</FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl>
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Select a role" />
+                                            <SelectValue placeholder="Select a title" />
                                         </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>

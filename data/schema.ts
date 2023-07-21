@@ -27,7 +27,7 @@ export const holidaySchema = z.object({
 })
 
 export const scheduleSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   day: z.string(),
   activity: z.enum(["work", "holiday", "break"]),
   startTime: z.string(),

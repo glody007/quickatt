@@ -99,7 +99,7 @@ export default function WeekSchedule({ className }: Props) {
                 "grid place-items-center",
                 gridCols,
                 gridRows,
-                "h-full overflow-scroll pb-32"
+                "h-full overflow-scroll pb-40"
             )}>
                 {days.map((day, idx) => {
                     return (
