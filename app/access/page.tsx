@@ -48,7 +48,7 @@ export default async function AccessPage() {
         </div>
         <div className="flex-[0.4] h-full flex pt-16 border-l bg-slate-900">
             <div className="w-full flex flex-col items-center space-y-10">
-                <Link href="/access" className="text-5xl font-semibold text-white">
+                <Link href="/access" className="text-4xl font-semibold text-white">
                     <span className="w-4 h-6 bg-green-400 rounded-xl">Quick</span>att
                 </Link>
                 <AccessCard />
