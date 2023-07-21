@@ -84,6 +84,12 @@ export const columns: ColumnDef<Agent>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => {
+      return (
+        <>
+          <DataTableRowActions row={row} />
+        </>
+      )
+    },
   },
 ]

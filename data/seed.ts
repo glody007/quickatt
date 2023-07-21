@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker"
 import { titles } from "./data"
 import { Agent, Holiday, Visit } from "./schema"
 
-const agents: Array<Agent> = Array.from({ length: 100 }, () => ({
+export const agents: Array<Agent> = Array.from({ length: 100 }, () => ({
   id: faker.string.uuid(),
   name: faker.internet.userName(),
   email: faker.internet.email(),
