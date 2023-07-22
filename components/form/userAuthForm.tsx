@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-
+import { signIn, signOut } from "next-auth/react";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -40,11 +40,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               disabled={isLoading}
             />
           </div>
-          <Button disabled={isLoading} className="bg-green-600 hover:bg-green-400">
+          <Button onClick={() => signIn()} disabled={isLoading} className="bg-green-600 hover:bg-green-400">
             {isLoading && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Sign In with Email
+            Sign In with Google
           </Button>
         </div>
       </form>
