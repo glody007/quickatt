@@ -1,13 +1,19 @@
-'use client'
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { MainNav } from '@/components/mainNav'
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
-const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/");
+  }
 
   return (
     <div className="">

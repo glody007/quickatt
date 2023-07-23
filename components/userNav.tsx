@@ -15,13 +15,10 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
   import { useRouter } from "next/navigation"
+  import { signOut } from "next-auth/react";
   
   export function UserNav() {
     const router = useRouter()
-
-    const logOut = () => {
-      router.push('/')
-    }
 
     return (
       <DropdownMenu>
@@ -58,7 +55,7 @@ import {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={logOut}>
+          <DropdownMenuItem onClick={() => signOut()}>
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>

@@ -9,6 +9,11 @@ import { columns } from "./columns"
 import Link from "next/link"
 import { AccessCard } from "@/components/accessCard"
 import { Button } from "@/components/ui/button"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth"
+import { redirect } from "next/navigation"
+import LogoutButton from "@/components/logoutButton"
+
 
 export const metadata: Metadata = {
   title: "Schedules",
@@ -28,6 +33,12 @@ async function getVisits() {
 }
 
 export default async function AccessPage() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/");
+  } 
+
   const visits = await getVisits()
 
   return (
@@ -36,9 +47,12 @@ export default async function AccessPage() {
             <div className="sticky top-0 bg-slate-100">
                 <div className="flex items-center justify-between space-y-2 px-4 py-4">
                     <h2 className="text-3xl text-slate-900 font-extrabold tracking-tight">Access list</h2>
-                    <Link href="/dashboard">
-                        <Button size="sm">Dashboard</Button>
-                    </Link>
+                    <div className="flex gap-2">
+                        <Link href="/dashboard">
+                            <Button size="sm">Dashboard</Button>
+                        </Link>
+                        <LogoutButton />
+                    </div>
                 </div>
                 <Separator />
             </div>
