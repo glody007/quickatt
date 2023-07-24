@@ -1,5 +1,18 @@
 import { z } from "zod"
-import { activities } from "./data"
+
+export const organisationSchema = z.object({
+  id: z.string().optional(),
+  name: z.string().min(1, {
+    message: "Name required"
+  }),
+  city: z.string().min(1, {
+    message: "City required"
+  }),
+  country: z.string().min(1, {
+    message: "Country required"
+  }),
+  address: z.string().optional(),
+})
 
 export const agentSchema = z.object({
   id: z.string().optional(),
@@ -41,3 +54,5 @@ export type Visit = z.infer<typeof visitSchema>
 export type Holiday = z.infer<typeof holidaySchema>
 
 export type Schedule = z.infer<typeof scheduleSchema>
+
+export type Organisation = z.infer<typeof organisationSchema>

@@ -15,6 +15,10 @@ const DashboardLayout = async ({ children }: DashboardLayoutProps) => {
     redirect("/");
   }
 
+  if(!session.user.organisationId) {
+    redirect("/organisation");
+  }
+
   return (
     <div className="">
       {/* <!-- ===== Page Wrapper Start ===== --> */}

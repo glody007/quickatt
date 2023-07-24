@@ -2,12 +2,12 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { motifs } from "@/data/data"
-import { Agent } from "@/data/schema"
+import { Visit } from "@/data/schema"
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 import { format, formatDistance } from "date-fns"
 
-export const columns: ColumnDef<Agent>[] = [
+export const columns: ColumnDef<Visit>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (

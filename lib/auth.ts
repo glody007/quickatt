@@ -16,13 +16,27 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
       httpOptions: {
         timeout: 10000,
+      },
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
       }
     })
   ],
   callbacks: {
-    async jwt({ token }) {
+    async jwt({ token, user }) {
       token.userRole = "admin"
       return token
     },
+    async session({ session, user }) {
+        if(session?.user) {
+            session.user.id = user?.id
+            session.user.organisationId = user?.organisationId
+        }
+        return session
+    }
   },
 }
