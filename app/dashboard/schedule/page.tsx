@@ -30,7 +30,6 @@ export default async function SchedulePage() {
             <HolidayHeader className="px-4 py-2" />
             <Separator />
             <div className="sticky overflow-scroll h-full pb-32">
-                {/* @ts-expect-error Server Component */}
                 <HolidayList className="p-4" />
             </div>
         </div>

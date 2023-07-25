@@ -8,8 +8,6 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import { format } from "date-fns"
 import {
     Select,
     SelectContent,
@@ -17,33 +15,28 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import { CalendarIcon } from "lucide-react"
-import { Calendar } from "@/components/ui/calendar"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import * as z from "zod"
-import { useState } from "react"
+import { useMutation, useQueryClient } from "react-query"
+import axios, { AxiosError } from "axios"
+import toast from "react-hot-toast"
 import { Agent, agentSchema } from "@/data/schema"
 
 interface AgentFormProps {
-    handleSuccess?: () => void
+    onSuccess?: () => void
     agent?: Agent
 }
 
-export default function AgentForm({ handleSuccess, agent }: AgentFormProps) {
-    const [isDisabled, setIsDisabled] = useState(false)
+export default function AgentForm({ onSuccess, agent }: AgentFormProps) {
+    const queryClient = useQueryClient()
     let toastAddId: string
 
     const defaultAgent: Agent = {
         name: "",
         email: "",
-        number: "0997028901",
+        number: "",
         title: ""
     }
 
@@ -52,8 +45,24 @@ export default function AgentForm({ handleSuccess, agent }: AgentFormProps) {
         defaultValues: agent ? { ...agent } : defaultAgent
     })
 
+    const { mutate, isLoading } = useMutation(
+        async (agent: Agent) => await axios.post('/api/agents', agent),
+        {
+            onError: (error) => {
+                if(error instanceof AxiosError) {
+                    toast.error(error?.response?.data.errors[0].message, {id: toastAddId})
+                }
+            },
+            onSuccess: (data) => {
+                toast.success("Added successfully 👏", { id: toastAddId })
+                queryClient.invalidateQueries(["agents"])
+                if(onSuccess) onSuccess()
+            }
+        }
+    )
+
     function onSubmit(values: Agent) {
-        
+        mutate(values)
     }
 
     return (
@@ -115,8 +124,8 @@ export default function AgentForm({ handleSuccess, agent }: AgentFormProps) {
                                         </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            <SelectItem key="directeur" value="director">Directeur</SelectItem>
-                                            <SelectItem key="normal" value="normal">Normal</SelectItem>
+                                            <SelectItem key="directeur" value="director">Level 2</SelectItem>
+                                            <SelectItem key="normal" value="normal">Level 1</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
@@ -125,7 +134,7 @@ export default function AgentForm({ handleSuccess, agent }: AgentFormProps) {
                         />
                         
                     </div>
-                    <Button disabled={isDisabled}  type="submit" className="mt-8">Confirmer</Button>
+                    <Button isLoading={isLoading}  type="submit" className="mt-8">Confirmer</Button>
                 </form>
             </Form>
     )

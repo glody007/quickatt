@@ -55,9 +55,10 @@ model User {
 
 model Agent {
   id              String         @id @default(cuid())
+  createdAt       DateTime       @default(now()) 
   name            String
-  email           String?
-  number          String       
+  email           String?         @unique
+  number          String          @unique     
   title           String       
   organisation    Organisation   @relation(fields: [organisationId], references: [id])
   organisationId  String

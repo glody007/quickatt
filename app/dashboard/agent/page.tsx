@@ -1,33 +1,14 @@
-import { promises as fs } from "fs"
-import path from "path"
 import { Metadata } from "next"
-import { z } from "zod"
 
-import { columns } from "./columns"
-import { DataTable } from "./data-table"
-import { agentSchema } from "@/data/schema"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
 import AddAgent from "@/components/addAgent"
+import AgentList from "./agentList"
 
 export const metadata: Metadata = {
   title: "Agents",
   description: "A agent tracker using Tanstack Table.",
 }
 
-// Simulate a database read for tasks.
-export async function getTasks() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), "data/agents.json")
-  )
-
-  const agents = JSON.parse(data.toString())
-
-  return z.array(agentSchema).parse(agents)
-}
-
 export default async function AgentPage() {
-  const agents = await getTasks()
 
   return (
     <>
@@ -47,7 +28,7 @@ export default async function AgentPage() {
                   <AddAgent />
                 </div>
             </div>
-            <DataTable data={agents} columns={columns} />
+            <AgentList />
         </div>
     </>
   )
