@@ -4,8 +4,6 @@ import path from "path"
 import { Metadata } from "next"
 import { z } from "zod"
 import { visitSchema } from "@/data/schema"
-import { DataTable } from "./data-table"
-import { columns } from "./columns"
 import Link from "next/link"
 import { AccessCard } from "@/components/accessCard"
 import { Button } from "@/components/ui/button"
@@ -13,23 +11,12 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 import { redirect } from "next/navigation"
 import LogoutButton from "@/components/logoutButton"
+import AccessList from "./accessList"
 
 
 export const metadata: Metadata = {
   title: "Schedules",
   description: "A schedule tracker using Tanstack Table.",
-}
-
-
-// Simulate a database read for visits.
-async function getVisits() {
-    const data = await fs.readFile(
-      path.join(process.cwd(), "data/visits.json")
-    )
-  
-    const agents = JSON.parse(data.toString())
-  
-    return z.array(visitSchema).parse(agents)
 }
 
 export default async function AccessPage() {
@@ -38,8 +25,6 @@ export default async function AccessPage() {
   if (!session) {
     redirect("/");
   } 
-
-  const visits = await getVisits()
 
   return (
     <div className="flex h-screen w-full">
@@ -57,10 +42,10 @@ export default async function AccessPage() {
                 <Separator />
             </div>
             <div className="h-full overflow-scroll px-4 pb-36">
-                <DataTable data={visits} columns={columns} />
+                <AccessList />
             </div>
         </div>
-        <div className="flex-[0.4] h-full flex pt-16 border-l bg-slate-900">
+        <div className="flex-[0.4] h-full flex pt-4 border-l bg-slate-900">
             <div className="w-full flex flex-col items-center space-y-10">
                 <Link href="/access" className="text-4xl font-semibold text-white">
                     <span className="w-4 h-6 bg-green-400 rounded-xl">Quick</span>att

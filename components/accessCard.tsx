@@ -15,6 +15,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import VisitForm from "./form/visitForm"
 import { Textarea } from "./ui/textarea"
 
 export function AccessCard() {
@@ -52,22 +53,8 @@ export function AccessCard() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="fullname">Full name</Label>
-              <Input id="fullname"  />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="number">Phone number</Label>
-              <Input id="number" type="number" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="motif">Motif</Label>
-              <Textarea id="motif" />
-            </div>
+            <VisitForm />
           </CardContent>
-          <CardFooter>
-            <Button className="bg-green-600 hover:bg-green-400">Save</Button>
-          </CardFooter>
         </Card>
       </TabsContent>
     </Tabs>

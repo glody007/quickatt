@@ -2,29 +2,15 @@ import { promises as fs } from "fs"
 import path from "path"
 import { Metadata } from "next"
 import { z } from "zod"
-
-import { columns } from "./columns"
-import { DataTable } from "./data-table"
 import { visitSchema } from "@/data/schema"
+import VisitList from "./visitList"
 
 export const metadata: Metadata = {
   title: "Visits",
   description: "A visit tracker using Tanstack Table.",
 }
 
-// Simulate a database read for visits.
-async function getVisits() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), "data/visits.json")
-  )
-
-  const agents = JSON.parse(data.toString())
-
-  return z.array(visitSchema).parse(agents)
-}
-
 export default async function VisitPage() {
-  const visits = await getVisits()
 
   return (
     <>
@@ -44,7 +30,7 @@ export default async function VisitPage() {
                     
                 </div>
             </div>
-            <DataTable data={visits} columns={columns} />
+            <VisitList />
         </div>
     </>
   )

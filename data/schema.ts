@@ -27,13 +27,22 @@ export const agentSchema = z.object({
 })
 
 export const visitSchema = z.object({
-    id: z.string(),
-    name: z.string(),
-    email: z.string(),
-    number: z.string(),
-    motif: z.string(),
-    entryTime: z.coerce.date(),
-    exitTime: z.coerce.date(),
+    id: z.string().optional(),
+    name: z.string().min(1, {
+      message: "Nom obligatoire"
+    }),
+    email: z.string()
+            .nullable()
+            .optional()
+            .transform((value) => value ?? ""),
+    number: z.string().min(1, {
+      message: "Numero obligatoire"
+    }),
+    motif: z.string().min(1, {
+      message: "Motif obligatoire"
+    }),
+    entryTime: z.coerce.date().optional(),
+    exitTime: z.coerce.date().optional(),
 })
 
 export const holidaySchema = z.object({

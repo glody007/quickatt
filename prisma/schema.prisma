@@ -70,7 +70,7 @@ model Visit {
   email           String?
   number          String       
   motif           String   
-  entryTime       DateTime
+  entryTime       DateTime       @default(now()) 
   exitTime        DateTime?    
   organisation    Organisation   @relation(fields: [organisationId], references: [id])
   organisationId  String

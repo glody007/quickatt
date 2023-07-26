@@ -73,9 +73,9 @@ export const columns: ColumnDef<Visit>[] = [
     },
   },
   {
-    accessorKey: "type",
+    accessorKey: "motif",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Type" />
+      <DataTableColumnHeader column={column} title="Motif" />
     ),
     cell: ({ row }) => {
       const motif = motifs.find(
