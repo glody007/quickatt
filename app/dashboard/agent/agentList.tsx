@@ -6,6 +6,7 @@ import { agentSchema} from "@/data/schema";
 import { z } from "zod";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
+import Loading from "@/components/loading";
 
 
 export default function AgentList() {
@@ -20,7 +21,7 @@ export default function AgentList() {
 
     if(error) return <>Error</>
 
-    if(isLoading) return <>Loading...</>
+    if(isLoading) return <Loading />
 
     const agents = z.array(agentSchema).parse(response.data)
 
