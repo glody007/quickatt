@@ -81,8 +81,9 @@ model Schedule {
   createdAt       DateTime       @default(now())  
   day             String
   activity        String
-  startTime       DateTime       @db.Time(0)
-  endTime         DateTime       @db.Time(0)
+  startTime       String      
+  endTime         String
+  timeZone        String         
   organisation    Organisation   @relation(fields: [organisationId], references: [id])
   organisationId  String
 }

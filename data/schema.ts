@@ -16,9 +16,13 @@ export const organisationSchema = z.object({
 
 export const agentSchema = z.object({
   id: z.string().optional(),
-  name: z.string(),
+  name: z.string().min(1, {
+    message: "Nom obligatoire"
+  }),
   email: z.string(),
-  number: z.string(),
+  number: z.string().min(1, {
+    message: "Numero obligatoire"
+  }),
   title: z.string(),
 })
 
@@ -43,10 +47,15 @@ export const holidaySchema = z.object({
 
 export const scheduleSchema = z.object({
   id: z.string().optional(),
-  day: z.string(),
+  day: z.enum(["mon", "tue", "wed", "thu", "fri", "sat", "sun"]),
   activity: z.enum(["work", "holiday", "break"]),
-  startTime: z.string(),
-  endTime: z.string()
+  startTime: z.string().min(1, {
+    message: "Start time obligatoire"
+  }),
+  endTime: z.string().min(1, {
+    message: "End time obligatoire"
+  }),
+  timeZone: z.string(),
 })
 
 export type Agent = z.infer<typeof agentSchema>

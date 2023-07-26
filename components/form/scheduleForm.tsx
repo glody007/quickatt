@@ -8,7 +8,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
+import { cn, convertTimeStringToMinute, getTimeZone } from "@/lib/utils"
 import { format } from "date-fns"
 import {
     Select,
@@ -17,37 +17,63 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import { CalendarIcon } from "lucide-react"
-import { Calendar } from "@/components/ui/calendar"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import * as z from "zod"
-import { useState } from "react"
+import { useMutation, useQueryClient } from "react-query"
+import axios, { AxiosError } from "axios"
+import toast from "react-hot-toast"
 import { Schedule, scheduleSchema } from "@/data/schema"
 
 interface ScheduleFormProps {
-    handleSuccess?: () => void
+    onSuccess?: () => void
     schedule?: Schedule
 }
 
-const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+const days = [
+    {
+        label: "monday",
+        value: "mon"
+    },
+    {
+        label: "tuesday",
+        value: "tue"
+    },
+    {
+        label: "wednesday",
+        value: "wed"
+    },
+    {
+        label: "thursday",
+        value: "thu"
+    },
+    {
+        label: "friday",
+        value: "fri"
+    },
+    {
+        label: "saturday",
+        value: "sat"
+    },
+    {
+        label: "sunday",
+        value: "sun"
+    },
+]
+
 const activities = ["work", "holiday", "break"]
 
-export default function ScheduleForm({ handleSuccess, schedule }: ScheduleFormProps) {
-    const [isDisabled, setIsDisabled] = useState(false)
+export default function ScheduleForm({ onSuccess, schedule }: ScheduleFormProps) {
+    const queryClient = useQueryClient()
     let toastAddId: string
 
     const defaultAgent: Schedule = {
-        day: "",
+        day: "mon",
         activity: "work",
-        startTime: "8:00 AM",
-        endTime: "5:00 PM"
+        startTime: "08:00",
+        endTime: "12:00",
+        timeZone: getTimeZone()
     }
 
     const form = useForm<z.infer<typeof scheduleSchema>>({
@@ -55,8 +81,24 @@ export default function ScheduleForm({ handleSuccess, schedule }: ScheduleFormPr
         defaultValues: schedule ? { ...schedule } : defaultAgent
     })
 
+    const { mutate, isLoading } = useMutation(
+        async (schedule: Schedule) => await axios.post('/api/schedules', schedule),
+        {
+            onError: (error) => {
+                if(error instanceof AxiosError) {
+                    toast.error(error?.response?.data.errors[0].message, {id: toastAddId})
+                }
+            },
+            onSuccess: (data) => {
+                toast.success("Created successfully 👏", { id: toastAddId })
+                queryClient.invalidateQueries(["schedules"])
+                if(onSuccess) onSuccess()
+            }
+        }
+    )
+
     function onSubmit(values: Schedule) {
-        
+        mutate(values)
     }
 
     return (
@@ -77,8 +119,8 @@ export default function ScheduleForm({ handleSuccess, schedule }: ScheduleFormPr
                                         </FormControl>
                                         <SelectContent>
                                             {days.map(day => (
-                                                <SelectItem key={day} value={day}>
-                                                    {day.toUpperCase()}
+                                                <SelectItem key={day.value} value={day.value}>
+                                                    {day.label}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>
@@ -95,7 +137,7 @@ export default function ScheduleForm({ handleSuccess, schedule }: ScheduleFormPr
                                 <FormItem>
                                     <FormLabel>Start</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="8:00 AM" {...field} />
+                                        <Input type="time" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -109,7 +151,7 @@ export default function ScheduleForm({ handleSuccess, schedule }: ScheduleFormPr
                                 <FormItem>
                                     <FormLabel>End</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="5:00 PM" {...field} />
+                                        <Input type="time" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -142,7 +184,7 @@ export default function ScheduleForm({ handleSuccess, schedule }: ScheduleFormPr
                         />
                         
                     </div>
-                    <Button disabled={isDisabled}  type="submit" className="mt-8">Confirmer</Button>
+                    <Button isLoading={isLoading}  type="submit" className="mt-8">Confirmer</Button>
                 </form>
             </Form>
     )
