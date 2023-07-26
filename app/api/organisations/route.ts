@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
 import { Organisation, organisationSchema } from "@/data/schema";
+import { initSchedule } from "@/lib/utilsBackend";
 
 export async function GET(
     req: NextRequest
@@ -93,6 +94,8 @@ export async function POST(
                 organisationId: org.id 
             }
         })
+
+        initSchedule(org.id)
 
         return NextResponse.json({
             success: true,
