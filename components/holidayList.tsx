@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { Holiday, holidaySchema } from "@/data/schema";
 import { z } from "zod";
+import Loading from "./loading";
 
 interface Props extends HtmlHTMLAttributes<HTMLDivElement> {
     
@@ -24,7 +25,7 @@ export default function HolidayList({ className }: Props) {
 
     if(error) return <>Error</>
 
-    if(isLoading) return <>Loading...</>
+    if(isLoading) return <Loading className="mt-4" />
 
     const holidays = z.array(holidaySchema).parse(response.data)
 
