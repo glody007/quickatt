@@ -18,15 +18,21 @@ import AgentForm from "./form/agentForm"
 const AddAgent = (
     { className }: { className?:string }
 ) => {
+    const [openModal, setOpenModal] = React.useState(false)
+
+    const handleSuccess = () => {
+        setOpenModal(false)
+    }
+
     return (
-        <Dialog>
+        <Dialog open={openModal} onOpenChange={setOpenModal}>
             <DialogTrigger asChild>
                 <Button className="bg-green-600 hover:bg-green-400">
                     <Plus /> New
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-w-sm">
-                <AgentForm />
+                <AgentForm onSuccess={handleSuccess} />
             </DialogContent>
         </Dialog>
     )

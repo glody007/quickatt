@@ -19,15 +19,21 @@ import HolidayForm from "./form/holidayForm"
 const AddHoliday = (
     { className }: { className?:string }
 ) => {
+    const [openModal, setOpenModal] = React.useState(false)
+
+    const handleSuccess = () => {
+        setOpenModal(false)
+    }
+
     return (
-        <Dialog>
+        <Dialog open={openModal} onOpenChange={setOpenModal}>
             <DialogTrigger asChild>
                 <Button variant="ghost" className="h-6 p-1">
                     <Plus className="w-4" />
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-w-sm">
-                <HolidayForm />
+                <HolidayForm onSuccess={handleSuccess} />
             </DialogContent>
         </Dialog>
     )
