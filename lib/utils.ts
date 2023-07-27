@@ -1,5 +1,6 @@
 import { Schedule } from "@/data/schema"
 import { type ClassValue, clsx } from "clsx"
+import { format, isBefore } from "date-fns"
 import { twMerge } from "tailwind-merge"
  
 export function cn(...inputs: ClassValue[]) {
@@ -23,4 +24,10 @@ export function areSchedulesOverlapping(scheduleA: Schedule, scheduleB: Schedule
   if(startMinutesB > startMinutesA && startMinutesB < endMinutesA) return true
   if(endMinutesB > startMinutesA && endMinutesB < endMinutesA) return true
   return false
+}
+
+export function formatAccessTime(dateTime: Date) {
+  const quickattLaunchDay = new Date(2023, 6, 20)
+  if(isBefore(dateTime, quickattLaunchDay)) return "-"
+  return format(dateTime, "HH:mm")
 }

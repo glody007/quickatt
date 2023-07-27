@@ -45,6 +45,31 @@ export const visitSchema = z.object({
     exitTime: z.coerce.date().optional(),
 })
 
+export const accessSchema = z.object({
+  id: z.string().optional(),
+  name: z.string().min(1, {
+    message: "Nom obligatoire"
+  }),
+  email: z.string()
+          .nullable()
+          .optional()
+          .transform((value) => value ?? ""),
+  number: z.string().min(1, {
+    message: "Numero obligatoire"
+  }),
+  type: z.string().min(1, {
+    message: "Type obligatoire"
+  }),
+  entryTime: z.coerce.date().optional(),
+  exitTime: z.coerce.date().optional(),
+})
+
+export const agentCredentialSchema = z.object({
+  pin: z.string().min(1, {
+    message: "Pin obligatoire"
+  })
+})
+
 export const holidaySchema = z.object({
   id: z.string().optional(),
   name: z.string().min(1, {
@@ -76,3 +101,7 @@ export type Holiday = z.infer<typeof holidaySchema>
 export type Schedule = z.infer<typeof scheduleSchema>
 
 export type Organisation = z.infer<typeof organisationSchema>
+
+export type AgentCredential = z.infer<typeof agentCredentialSchema>
+
+export type Access = z.infer<typeof accessSchema>

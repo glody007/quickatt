@@ -57,11 +57,13 @@ model Agent {
   id              String         @id @default(cuid())
   createdAt       DateTime       @default(now()) 
   name            String
-  email           String?         @unique
-  number          String          @unique     
-  title           String       
+  email           String?        @unique
+  number          String         @unique     
+  title           String 
+  pin             String?        @unique       
   organisation    Organisation   @relation(fields: [organisationId], references: [id])
   organisationId  String
+  accesses        Access[]
 }
 
 model Visit {
@@ -72,6 +74,16 @@ model Visit {
   motif           String   
   entryTime       DateTime       @default(now()) 
   exitTime        DateTime?    
+  organisation    Organisation   @relation(fields: [organisationId], references: [id])
+  organisationId  String
+}
+
+model Access {
+  id              String         @id @default(cuid())    
+  entryTime       DateTime       @default(now()) 
+  exitTime        DateTime?
+  agent           Agent          @relation(fields: [agentId], references: [id])
+  agentId         String    
   organisation    Organisation   @relation(fields: [organisationId], references: [id])
   organisationId  String
 }
@@ -106,6 +118,7 @@ model Organisation {
   users           User[]
   agents          Agent[]
   visits          Visit[]
+  accesses        Access[]
   schedules       Schedule[]
   holidays        Holiday[]
 }

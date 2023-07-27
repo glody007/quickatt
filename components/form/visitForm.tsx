@@ -52,6 +52,7 @@ export default function VisitForm({ onSuccess, visit }: VisitFormProps) {
             onSuccess: (data) => {
                 toast.success("Added successfully 👏", { id: toastAddId })
                 queryClient.invalidateQueries(["visites"])
+                queryClient.invalidateQueries(["accesses"])
                 form.reset()
                 if(onSuccess) onSuccess()
             }

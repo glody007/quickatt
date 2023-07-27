@@ -1,8 +1,4 @@
-import { promises as fs } from "fs"
-import path from "path"
 import { Metadata } from "next"
-import { z } from "zod"
-import { visitSchema } from "@/data/schema"
 import VisitList from "./visitList"
 
 export const metadata: Metadata = {
@@ -20,10 +16,10 @@ export default async function VisitPage() {
             <div className="flex items-center justify-between space-y-2">
                 <div>
                     <h2 className="text-3xl text-slate-300 font-bold tracking-tight">
-                        Agents
+                        Visites
                     </h2>
                     <p className="text-muted-foreground">
-                        Here&apos;s the list of agents
+                        Here&apos;s the list of visites
                     </p>
                 </div>
                 <div className="flex items-center space-x-2">

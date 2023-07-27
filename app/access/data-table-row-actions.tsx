@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { visitSchema } from "@/data/schema"
+import { accessSchema } from "@/data/schema"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -26,7 +26,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = visitSchema.parse(row.original)
+  const access = accessSchema.parse(row.original)
 
   return (
     <DropdownMenu>

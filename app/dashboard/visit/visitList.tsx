@@ -22,7 +22,7 @@ export default function VisitList() {
     if(error) return <>Error</>
 
     if(isLoading) return <Loading />
-    console.log(response.data)
+    
     const visites = z.array(visitSchema).parse(response.data)
 
     return (

@@ -2,7 +2,7 @@
 
 import { useQuery } from "react-query";
 import axios from "axios";
-import { visitSchema } from "@/data/schema";
+import { accessSchema } from "@/data/schema";
 import { z } from "zod";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
@@ -13,19 +13,19 @@ export default function AccessList() {
 
     const { data: response, error, isLoading } = useQuery({
         queryFn: async () => {
-           const response = await axios.get("/api/visites")
+           const response = await axios.get("/api/accesses")
            return response.data
         },
-        queryKey: ["visites"]
+        queryKey: ["accesses"]
     })
 
     if(error) return <>Error</>
 
     if(isLoading) return <Loading />
-    console.log(response.data)
-    const visites = z.array(visitSchema).parse(response.data)
-
+    
+    const accesses = z.array(accessSchema).parse(response.data)
+    console.log(accesses)
     return (
-        <DataTable data={visites} columns={columns} />
+        <DataTable data={accesses} columns={columns} />
     )
 }

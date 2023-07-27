@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
-import { Agent, agentSchema } from "@/data/schema";
-import { genPassword } from "@/lib/utilsBackend";
+import { Access, AgentCredential, agentCredentialSchema, visitSchema } from "@/data/schema";
 
 export async function GET(
     req: NextRequest
@@ -17,14 +16,48 @@ export async function GET(
     }, { status: 401 })
 
     try {
-        const data = await prisma.agent.findMany({
+        const visites = await prisma.visit.findMany({
             where: { 
                 organisationId: session.user.organisationId
             },
             orderBy: {
-                name: 'asc'
+                entryTime: 'desc'
             },
         })
+
+        const accesses = await prisma.access.findMany({
+            where: { 
+                organisationId: session.user.organisationId
+            },
+            orderBy: {
+                entryTime: 'desc'
+            },
+            include: {
+                agent: true
+            }
+        })
+
+        const visiteData: Array<Access> = visites.map((access) => {
+                return {
+                    ...visitSchema.parse(access),
+                    type: "visit"
+                }
+        })
+
+        const accessData: Array<Access> = accesses.map((access) => {
+            return {
+                id: access.id,
+                name: access.agent.name,
+                email: access.agent.email || "",
+                number: access.agent.number,
+                entryTime: access.entryTime,
+                exitTime: access.exitTime || new Date("1970-01-01T00:00:00.000Z"),
+                type: "agent"
+            }
+        })
+
+        const data = [...visiteData, ...accessData]
+
         return NextResponse.json({
             success: true,
             code: 200,
@@ -35,7 +68,7 @@ export async function GET(
         return NextResponse.json({
             success: false,
             code: 500,
-            errors: [{ message: "Error fetching agents" }]
+            errors: [{ message: "Error fetching accesses" }]
         }, { status: 500 })
     }  
 }
@@ -51,9 +84,9 @@ export async function POST(
         errors: [{ message: "Please sign in" }]
     }, { status: 401 })
 
-    const agentData: Agent = await req.json()
+    const credentialData: AgentCredential = await req.json()
     
-    const validate = agentSchema.safeParse(agentData)
+    const validate = agentCredentialSchema.safeParse(credentialData)
     
     if(!validate.success) {
         return NextResponse.json({
@@ -61,43 +94,27 @@ export async function POST(
             code: 403,
             errors: validate.error.issues.map(issue => ({
                 message: issue.message
-            }))
+            })) 
         }, { status: 403 })
     }
 
-    const agentWithSameNumber = await prisma.agent.findFirst({
+    const agent = await prisma.agent.findFirst({
         where: {
-            number: agentData.number
+            pin: credentialData.pin
         }
     })
 
-    if(agentWithSameNumber) {
-        return NextResponse.json({
-            success: false,
-            code: 403,
-            errors: [{ message: "Numéro déja utilisé" }]
-        }, { status: 403 })
-    }
-
-    const agentWithSameEmail = await prisma.agent.findFirst({
-        where: {
-            email: agentData.email
-        }
-    })
-
-    if(agentWithSameEmail) {
-        return NextResponse.json({
-            success: false,
-            code: 403,
-            errors: [{ message: "Email déja utilisé" }]
-        }, { status: 403 })
-    }
+    if(!agent) return NextResponse.json({
+        success: false,
+        code: 401,
+        errors: [{ message: "Mot de passe incorrect" }]
+    }, { status: 401 })
 
     try {
-        const agent = await prisma.agent.create({
+        const access = await prisma.access.create({
             data: {
-                ...agentData,
-                pin: genPassword(),
+                entryTime: new Date(),
+                agentId: agent.id,
                 organisationId: session.user.organisationId
             }
         })
@@ -105,14 +122,14 @@ export async function POST(
         return NextResponse.json({
             success: true,
             code: 201,
-            data: agent
+            data: access
         }, { status: 201 })
     } catch(err) {
         console.log(err)
         return NextResponse.json({
             success: false,
             code: 500,
-            errors: [{ message: "Error has occured while adding agent" }]
+            errors: [{ message: "Error has occured while adding access" }]
         }, { status: 500 })
     }
 }

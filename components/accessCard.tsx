@@ -15,6 +15,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import AgentCredentialForm from "./form/agentCredentialForm"
 import VisitForm from "./form/visitForm"
 import { Textarea } from "./ui/textarea"
 
@@ -34,14 +35,8 @@ export function AccessCard() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="pin">Pin agent</Label>
-              <Input id="pin" type="password" defaultValue="Pedro Duarte" />
-            </div>
+            <AgentCredentialForm />
           </CardContent>
-          <CardFooter>
-            <Button className="bg-green-600 hover:bg-green-400">Save</Button>
-          </CardFooter>
         </Card>
       </TabsContent>
       <TabsContent value="visitor">
