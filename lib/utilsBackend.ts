@@ -1,4 +1,5 @@
 import prisma from "@/prisma/client";
+import { isSameDay } from "date-fns";
 
 export async function initSchedule(organisationId: string) {
     const days = ["mon", "tue", "wed", "thu", "fri"]
@@ -30,4 +31,8 @@ export function genPassword() {
         password += chars.substring(randomNumber, randomNumber + 1);
     }
     return password
- }
+}
+
+export function isToday(date: Date) {
+    return isSameDay(date, new Date())
+}

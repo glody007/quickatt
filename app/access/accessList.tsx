@@ -24,7 +24,7 @@ export default function AccessList() {
     if(isLoading) return <Loading />
     
     const accesses = z.array(accessSchema).parse(response.data)
-    console.log(accesses)
+    
     return (
         <DataTable data={accesses} columns={columns} />
     )

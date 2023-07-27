@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
 import { Access, AgentCredential, agentCredentialSchema, visitSchema } from "@/data/schema";
+import { isToday } from "@/lib/utilsBackend";
 
 export async function GET(
     req: NextRequest
@@ -110,7 +111,41 @@ export async function POST(
         errors: [{ message: "Mot de passe incorrect" }]
     }, { status: 401 })
 
+    const lastAccess = await prisma.access.findFirst({
+        where: {
+            agentId: agent.id
+        },
+        orderBy: {
+            entryTime: "desc"
+        }
+    })
+
     try {
+        if(lastAccess?.exitTime && isToday(lastAccess.exitTime)) {
+            return NextResponse.json({
+                success: false,
+                code: 401,
+                errors: [{ message: "Vous avez déjà enregistré votre sortie" }]
+            }, { status: 401 })
+        }
+
+        if(lastAccess?.entryTime && isToday(lastAccess.entryTime)) {
+            const updatedAccess = await prisma.access.update({
+                where: { id: lastAccess?.id },
+                data: { 
+                    ...lastAccess, 
+                    exitTime: new Date()
+                }
+            })
+
+            return NextResponse.json({
+                success: true,
+                code: 201,
+                data: updatedAccess,
+                message: "Sortie enregistré"
+            }, { status: 201 })
+        }
+
         const access = await prisma.access.create({
             data: {
                 entryTime: new Date(),
@@ -122,7 +157,8 @@ export async function POST(
         return NextResponse.json({
             success: true,
             code: 201,
-            data: access
+            data: access,
+            message: "Entrée enregistré"
         }, { status: 201 })
     } catch(err) {
         console.log(err)

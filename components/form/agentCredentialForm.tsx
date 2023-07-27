@@ -45,8 +45,8 @@ export default function AgentCredentialForm({ onSuccess, credential }: AgentCred
                     toast.error(error?.response?.data.errors[0].message, {id: toastAddId})
                 }
             },
-            onSuccess: (data) => {
-                toast.success("Added successfully 👏", { id: toastAddId })
+            onSuccess: (response) => {
+                toast.success(`${response.data.message} 👏`, { id: toastAddId })
                 queryClient.invalidateQueries(["accesses"])
                 form.reset()
                 if(onSuccess) onSuccess()
