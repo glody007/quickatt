@@ -37,7 +37,7 @@ export default async function AccessPage() {
                 </div>
                 <Separator />
             </div>
-            <div className="h-full overflow-scroll px-4 pb-36">
+            <div className="h-full overflow-scroll px-4 pt-2 pb-36">
                 <AccessList />
             </div>
         </div>
