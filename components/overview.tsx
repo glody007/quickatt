@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Card,
     CardContent,
@@ -8,8 +10,27 @@ import {
 import { TopAttendance } from "@/components/topAttendance"
 import { LayoutList, ListChecks, UserCog, Users } from "lucide-react"
 import { OverviewYearWorkingHour } from "./overviewYearWorkingHour"
+import { useQuery } from "react-query"
+import axios from "axios"
+import Loading from "./loading"
+import { z } from "zod"
+import { analyticsSchema } from "@/data/schema"
 
 export function Overview() {
+    const { data: response, error, isLoading } = useQuery({
+        queryFn: async () => {
+          const response = await axios.get("/api/analytics")
+          return response.data
+        },
+        queryKey: ["analytics"]
+    })
+
+    if(error) return <>Error</>
+
+    if(isLoading) return <Loading />
+
+    const analytics = analyticsSchema.parse(response.data)
+
     return (
         <>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -21,9 +42,9 @@ export function Overview() {
                     <Users className="text-green-400" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">48</div>
+                    <div className="text-2xl font-bold">{analytics.totalAgent}</div>
                     <p className="text-xs text-muted-foreground">
-                      +20.1% from last month
+                      For your organisation
                     </p>
                   </CardContent>
                 </Card>
@@ -35,9 +56,9 @@ export function Overview() {
                     <ListChecks className="text-green-400" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">40</div>
+                    <div className="text-2xl font-bold">{analytics.attendances}</div>
                     <p className="text-xs text-muted-foreground">
-                      -10.0% from yesterday
+                      {(analytics.attendancesRatio * 100).toFixed(2)}% are present today
                     </p>
                   </CardContent>
                 </Card>
@@ -49,9 +70,9 @@ export function Overview() {
                     <LayoutList className="text-green-400" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">8</div>
+                    <div className="text-2xl font-bold">{analytics.absences}</div>
                     <p className="text-xs text-muted-foreground">
-                      +10.0% from yesterday
+                      {analytics.absencesRatio * 100}% are absent today
                     </p>
                   </CardContent>
                 </Card>
@@ -63,9 +84,9 @@ export function Overview() {
                     <UserCog className="text-green-400" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">573</div>
+                    <div className="text-2xl font-bold">{analytics.visits}</div>
                     <p className="text-xs text-muted-foreground">
-                      +20 from yesterday
+                      Today
                     </p>
                   </CardContent>
                 </Card>

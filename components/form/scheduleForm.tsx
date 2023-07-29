@@ -34,31 +34,31 @@ interface ScheduleFormProps {
 const days = [
     {
         label: "monday",
-        value: "mon"
+        value: "Mon"
     },
     {
         label: "tuesday",
-        value: "tue"
+        value: "Tue"
     },
     {
         label: "wednesday",
-        value: "wed"
+        value: "Wed"
     },
     {
         label: "thursday",
-        value: "thu"
+        value: "Thu"
     },
     {
         label: "friday",
-        value: "fri"
+        value: "Fri"
     },
     {
         label: "saturday",
-        value: "sat"
+        value: "Sat"
     },
     {
         label: "sunday",
-        value: "sun"
+        value: "Sun"
     },
 ]
 
@@ -69,7 +69,7 @@ export default function ScheduleForm({ onSuccess, schedule }: ScheduleFormProps)
     let toastAddId: string
 
     const defaultAgent: Schedule = {
-        day: "mon",
+        day: "Mon",
         activity: "work",
         startTime: "08:00",
         endTime: "12:00",

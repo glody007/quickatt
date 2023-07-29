@@ -3,6 +3,8 @@ import { type ClassValue, clsx } from "clsx"
 import { format, isBefore } from "date-fns"
 import { twMerge } from "tailwind-merge"
  
+export const QUICKATT_LAUNCH_DAY = new Date(2023, 6, 20)
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -27,7 +29,7 @@ export function areSchedulesOverlapping(scheduleA: Schedule, scheduleB: Schedule
 }
 
 export function formatAccessTime(dateTime: Date) {
-  const quickattLaunchDay = new Date(2023, 6, 20)
+  const quickattLaunchDay = QUICKATT_LAUNCH_DAY
   if(isBefore(dateTime, quickattLaunchDay)) return "-"
   return format(dateTime, "HH:mm")
 }

@@ -20,7 +20,7 @@ const getHourFromIndex = (index: number) => {
     return `${hour} PM`
 }
 
-const days = ["", "mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+const days = ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const hours = Array.from({ length: 24  }, (value, index) =>  getHourFromIndex(index));
 
 const HOUR_SUBS = 6
