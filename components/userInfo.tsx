@@ -11,6 +11,7 @@ import { Agent, analyticsSchema } from "@/data/schema";
 import { cn } from "@/lib/utils";
 import { useUserRange } from "@/store/useUserRange";
 import axios from "axios";
+import { format } from "date-fns";
 import { HtmlHTMLAttributes } from "react";
 import { useQuery } from "react-query";
 import Loading from "./loading";
@@ -45,25 +46,25 @@ export default function UserInfo({ agent, className }: Props) {
                 <div className="flex justify-between">
                     <UserInfoOverviewCard 
                         title="Selected Period" 
-                        info="Jul 1st - 3st, 2022"
-                        className="flex-1"
+                        info={`${format(new Date(range.startDate), "PPP")} - ${format(new Date(range.endDate), "PPP")}`}
+                        className="flex-[0.6]"
                     />
                     <UserInfoOverviewCard 
                         title="Working Hours" 
                         info="300 h - 80 %"
-                        className="flex-1"
+                        className="flex-[0.4]"
                     />
                 </div>
                 <div className="flex justify-between">
                     <UserInfoOverviewCard 
                         title="Presences / Working days" 
                         info="40 / 50"
-                        className="flex-1"
+                        className="flex-[0.6]"
                     />
                     <UserInfoOverviewCard 
                         title="Absences / Working days" 
                         info="10 / 50"
-                        className="flex-1"
+                        className="flex-[0.4]"
                     />
                 </div>
                 <Card className="col-span-4">
