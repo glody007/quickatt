@@ -5,7 +5,7 @@ import { CalendarIcon } from "@radix-ui/react-icons"
 import { addDays, format } from "date-fns"
 import { DateRange } from "react-day-picker"
 
-import { cn } from "@/lib/utils"
+import { cn, formatDateYMD } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -28,8 +28,8 @@ export function StatDateRangePicker({
     setDate(range)
     if(range && range.from && range.to) {
       selectRange({
-        startDate: format(range.from, "yyyy-MM-dd"),
-        endDate: format(range.to, "yyyy-MM-dd")
+        startDate: formatDateYMD(range.from),
+        endDate: formatDateYMD(range.to)
       })
     }
   }

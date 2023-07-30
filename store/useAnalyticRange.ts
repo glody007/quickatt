@@ -1,3 +1,4 @@
+import { formatDateYMD } from "@/lib/utils"
 import { addDays, format } from "date-fns"
 import { create } from "zustand"
 
@@ -13,8 +14,8 @@ interface AnalyticRange {
 
 export const useAnalyticRange = create<AnalyticRange>((set) => ({
     range: {
-        startDate: format(addDays(new Date(), -7), "yyyy-MM-dd"),
-        endDate: format(new Date(), "yyyy-MM-dd")
+        startDate: formatDateYMD(addDays(new Date(), -7)),
+        endDate: formatDateYMD(new Date())
     },
     selectRange: (range: Range) => set((state) => ({ range }))
 }))

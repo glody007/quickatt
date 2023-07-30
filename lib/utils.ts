@@ -33,3 +33,8 @@ export function formatAccessTime(dateTime: Date) {
   if(isBefore(dateTime, quickattLaunchDay)) return "-"
   return format(dateTime, "HH:mm")
 }
+
+
+export function formatDateYMD(date: Date) {
+  return format(date, "yyyy-MM-dd")
+}
