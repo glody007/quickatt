@@ -17,29 +17,31 @@ export async function GET(
     }, { status: 401 })
 
     const startDate = addDays(new Date(), -1)
-    const endDate = addDays(new Date(), 1)
+    const endDate = addDays(new Date(), 0)
 
     const analytics = new Analytics(session.user.organisationId)
 
     const totalAgent = await analytics.countAgent()
     const visits = await analytics.countVisitsInRange(startDate, endDate, )
     const attendances = await analytics.countAccessInRange(startDate, endDate)
+    const attendancesForWorkingDays = await analytics.countAccessForWorkingDaysInRange(startDate, endDate)
     const workingHours = await analytics.countAccessInRange(startDate, endDate)
     const workingDays = await analytics.workingDaysInRange(startDate, endDate)
-    const totalAttendances = workingDays.length * totalAgent
-    const attendancesRatio = attendances / totalAttendances
-    // console.log('-----', workingDays.length, '----', attendances, '-----', totalAgent)
+    const totalAttendancesForWorkingDays = workingDays.length * totalAgent
+    const absencesForWorkingDays = totalAttendancesForWorkingDays - attendancesForWorkingDays
+    const attendancesRatioForWorkingDays = totalAttendancesForWorkingDays ? attendancesForWorkingDays / totalAttendancesForWorkingDays : 0
+    const absencesRatioForWorkingDays = totalAttendancesForWorkingDays ? 1 - attendancesRatioForWorkingDays : 0
 
     try {
         const data = {
             totalAgent: totalAgent,
             attendances: attendances,
-            absences: 2,
+            absences: absencesForWorkingDays,
             visits: visits,
             workingHours: 300,
             workingDays: workingDays.length,
-            attendancesRatio: attendancesRatio,
-            absencesRatio: 0.2,
+            attendancesRatio: attendancesRatioForWorkingDays,
+            absencesRatio: absencesRatioForWorkingDays,
             workingHoursVolume: 240,
         }
 

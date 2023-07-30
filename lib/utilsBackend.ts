@@ -75,7 +75,6 @@ export class Analytics {
                                     name: format(day, 'EEE', { locale: enUS }),
                                     date: day
                                 }))
-
         return daysOfInterval
                 .filter(day => workingDaysNameInWeek.includes(day.name))
                 .map(day => day.date)
@@ -111,9 +110,12 @@ export class Analytics {
         return (await this.accessInRange(startDate, endDate)).length
     }
 
+    async countAccessForWorkingDaysInRange(startDate: Date, endDate: Date) {
+        return (await this.accessForWorkingDaysInRange(startDate, endDate)).length
+    }
+
     async accessInRange(startDate: Date, endDate: Date) {
-        const workingDaysNameInWeek = await this.workingDaysNameInWeek(startDate, endDate)
-        const totalAccess = await prisma.access.findMany({
+        return prisma.access.findMany({
             where: {
                 AND: [
                     {
@@ -132,6 +134,11 @@ export class Analytics {
                 ]
             }
         })
+    }
+
+    async accessForWorkingDaysInRange(startDate: Date, endDate: Date) {
+        const workingDaysNameInWeek = await this.workingDaysNameInWeek(startDate, endDate)
+        const totalAccess = await this.accessInRange(startDate, endDate)
         return totalAccess
                 .filter(acces => workingDaysNameInWeek.includes(format(acces.entryTime, 'EEE', { locale: enUS })))
     }

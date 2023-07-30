@@ -58,7 +58,7 @@ export function Overview() {
                   <CardContent>
                     <div className="text-2xl font-bold">{analytics.attendances}</div>
                     <p className="text-xs text-muted-foreground">
-                      {(analytics.attendancesRatio * 100).toFixed(2)}% are present today
+                      {(analytics.attendancesRatio * 100).toFixed(2)}% For working days
                     </p>
                   </CardContent>
                 </Card>
@@ -72,7 +72,7 @@ export function Overview() {
                   <CardContent>
                     <div className="text-2xl font-bold">{analytics.absences}</div>
                     <p className="text-xs text-muted-foreground">
-                      {analytics.absencesRatio * 100}% are absent today
+                      {(analytics.absencesRatio * 100).toFixed(2)}% For working days
                     </p>
                   </CardContent>
                 </Card>
