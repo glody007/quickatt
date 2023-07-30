@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Card,
     CardContent,
@@ -8,8 +10,26 @@ import {
 import { Hourglass, ListChecks, Sunrise, UserCog } from "lucide-react"
 import { WorkingHourRange } from "./workingHourRange"
 import { AttendanceRange } from "./attendanceRange"
+import axios from "axios"
+import Loading from "./loading"
+import { analyticsSchema } from "@/data/schema"
+import { useQuery } from "react-query"
 
 export function Analytics() {
+    const { data: response, error, isLoading } = useQuery({
+        queryFn: async () => {
+          const response = await axios.get("/api/analytics")
+          return response.data
+        },
+        queryKey: ["analytics"]
+    })
+
+    if(error) return <>Error</>
+
+    if(isLoading) return <Loading />
+
+    const analytics = analyticsSchema.parse(response.data)
+
     return (
         <>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -22,10 +42,10 @@ export function Analytics() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                        60 %
+                      {(analytics.attendancesRatio * 100).toFixed(2)}%
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      +20.1% from last month
+                      For working days
                     </p>
                   </CardContent>
                 </Card>
@@ -38,10 +58,10 @@ export function Analytics() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                        300 Hours
+                      {analytics.workingHoursVolume.toFixed(2)} Hours
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      -10.0% from last month
+                      {(analytics.workingHoursRatio * 100).toFixed(2)}% of {analytics.workingHours.toFixed(2)} total Hours
                     </p>
                   </CardContent>
                 </Card>
@@ -54,10 +74,10 @@ export function Analytics() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                        680
+                      {analytics.visits}
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      +15.0% from last month
+                      For all days 
                     </p>
                   </CardContent>
                 </Card>
@@ -69,9 +89,9 @@ export function Analytics() {
                     <Sunrise className="text-green-400" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">20</div>
+                    <div className="text-2xl font-bold">{analytics.workingDays}</div>
                     <p className="text-xs text-muted-foreground">
-                      working days
+                      In the selected range
                     </p>
                   </CardContent>
                 </Card>

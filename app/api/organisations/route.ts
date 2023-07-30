@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
 import { Organisation, organisationSchema } from "@/data/schema";
-import { initSchedule } from "@/lib/utilsBackend";
+import { initSchedule } from "@/lib/utilServer";
 
 export async function GET(
     req: NextRequest

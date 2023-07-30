@@ -74,6 +74,7 @@ export const analyticsSchema = z.object({
   attendancesRatio: z.number(),
   absencesRatio: z.number(),
   workingHoursVolume: z.number(),
+  workingHoursRatio: z.number()
 })
 
 export const agentCredentialSchema = z.object({

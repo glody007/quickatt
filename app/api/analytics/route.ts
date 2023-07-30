@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
 import { addDays } from "date-fns";
-import { Analytics } from "@/lib/utilsBackend";
+import { Analytics } from "@/lib/utilServer";
 
 export async function GET(
     req: NextRequest
@@ -25,12 +25,14 @@ export async function GET(
     const visits = await analytics.countVisitsInRange(startDate, endDate, )
     const attendances = await analytics.countAccessInRange(startDate, endDate)
     const attendancesForWorkingDays = await analytics.countAccessForWorkingDaysInRange(startDate, endDate)
-    const workingHours = await analytics.countAccessInRange(startDate, endDate)
     const workingDays = await analytics.workingDaysInRange(startDate, endDate)
     const totalAttendancesForWorkingDays = workingDays.length * totalAgent
     const absencesForWorkingDays = totalAttendancesForWorkingDays - attendancesForWorkingDays
     const attendancesRatioForWorkingDays = totalAttendancesForWorkingDays ? attendancesForWorkingDays / totalAttendancesForWorkingDays : 0
     const absencesRatioForWorkingDays = totalAttendancesForWorkingDays ? 1 - attendancesRatioForWorkingDays : 0
+    const workingHours = await analytics.workingHoursInRange(startDate, endDate)
+    const agentsWorkingHoursInRange = await analytics.agentsWorkingHoursInRange(startDate, endDate)
+    const workingHoursRatio = workingHours ? agentsWorkingHoursInRange.totalHours / workingHours : 0
 
     try {
         const data = {
@@ -38,11 +40,12 @@ export async function GET(
             attendances: attendances,
             absences: absencesForWorkingDays,
             visits: visits,
-            workingHours: 300,
+            workingHours: workingHours,
             workingDays: workingDays.length,
             attendancesRatio: attendancesRatioForWorkingDays,
             absencesRatio: absencesRatioForWorkingDays,
-            workingHoursVolume: 240,
+            workingHoursVolume: agentsWorkingHoursInRange.totalHours,
+            workingHoursRatio: workingHoursRatio
         }
 
         return NextResponse.json({

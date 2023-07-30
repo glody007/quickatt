@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
 import { Agent, agentSchema } from "@/data/schema";
-import { genPassword } from "@/lib/utilsBackend";
+import { genPassword } from "@/lib/utilServer";
 
 export async function GET(
     req: NextRequest

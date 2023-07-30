@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
 import { Access, AgentCredential, agentCredentialSchema, visitSchema } from "@/data/schema";
-import { isToday } from "@/lib/utilsBackend";
+import { isToday } from "@/lib/utilServer";
 
 export async function GET(
     req: NextRequest
