@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
 import { Visit, visitSchema } from "@/data/schema";
+import { addDays } from "date-fns";
+import { Analytics } from "@/lib/utilServer";
 
 export async function GET(
     req: NextRequest
@@ -15,15 +17,16 @@ export async function GET(
         errors: [{ message: "Please sign in" }]
     }, { status: 401 })
 
+    const url = new URL(req.url)
+    const dateString = url.searchParams.get('date')
+    const date = dateString ? new Date(dateString) : new Date()
+
+    const startDate = date
+    const endDate = addDays(date, 1)
+
     try {
-        const data = await prisma.visit.findMany({
-            where: { 
-                organisationId: session.user.organisationId
-            },
-            orderBy: {
-                entryTime: 'desc'
-            },
-        })
+        const analytics = new Analytics(session.user.organisationId)
+        const data = await analytics.visitsInRange(startDate, endDate)
         return NextResponse.json({
             success: true,
             code: 200,

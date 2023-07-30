@@ -160,7 +160,10 @@ export class Analytics {
                         }
                     }
                 ]
-            }
+            },
+            orderBy: {
+                entryTime: 'desc'
+            },
         })
     }
 
@@ -193,7 +196,10 @@ export class Analytics {
             },
             include: {
                 agent: true
-            }
+            },
+            orderBy: {
+                entryTime: 'desc'
+            },
         })
     }
 

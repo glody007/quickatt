@@ -9,7 +9,7 @@ import { DataTableViewOptions } from "@/components/table/data-table-view-options
 
 import { motifs } from "@/data/data"
 import { DataTableFacetedFilter } from "@/components/table/data-table-faceted-filter"
-import { DatePicker } from "@/components/ui/datePicker"
+import VisitDatePicker from "@/components/visitDatePicker"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -31,7 +31,7 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        <DatePicker />
+        <VisitDatePicker />
         {table.getColumn("motif") && (
           <DataTableFacetedFilter
             column={table.getColumn("motif")}
