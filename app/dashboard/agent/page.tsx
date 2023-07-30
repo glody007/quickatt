@@ -2,6 +2,7 @@ import { Metadata } from "next"
 
 import AddAgent from "@/components/addAgent"
 import AgentList from "./agentList"
+import { UserDetailsSheet } from "./userDetailsSheet"
 
 export const metadata: Metadata = {
   title: "Agents",
@@ -29,6 +30,7 @@ export default async function AgentPage() {
                 </div>
             </div>
             <AgentList />
+            <UserDetailsSheet />
         </div>
     </>
   )

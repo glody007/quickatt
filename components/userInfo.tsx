@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Card,
     CardContent,
@@ -5,16 +7,35 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { Agent, analyticsSchema } from "@/data/schema";
 import { cn } from "@/lib/utils";
+import { useUserRange } from "@/store/useUserRange";
+import axios from "axios";
 import { HtmlHTMLAttributes } from "react";
+import { useQuery } from "react-query";
+import Loading from "./loading";
 import { OverviewYearWorkingHour } from "./overviewYearWorkingHour";
 import UserInfoOverviewCard from "./userInfoOverviewCard";
 
 interface Props extends HtmlHTMLAttributes<HTMLDivElement> {
-
+    agent: Agent
 }
 
-export default function UserInfo({ className }: Props) {
+export default function UserInfo({ agent, className }: Props) {
+    const { range } = useUserRange()
+    const { data: response, error, isLoading } = useQuery({
+        queryFn: async () => {
+          const response = await axios.get(`/api/analytics?startDate=${range.startDate}&endDate=${range.endDate}`)
+          return response.data
+        },
+        queryKey: ["user-details", range]
+    })
+
+    if(error) return <>Error</>
+
+    if(isLoading) return <Loading />
+
+    const analytics = analyticsSchema.parse(response.data)
 
     return (
         <div className={cn(
