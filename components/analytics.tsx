@@ -14,15 +14,22 @@ import axios from "axios"
 import Loading from "./loading"
 import { analyticsSchema } from "@/data/schema"
 import { useQuery } from "react-query"
+import { useAnalyticRange } from "@/store/useAnalyticRange"
+import { useEffect } from "react"
 
 export function Analytics() {
-    const { data: response, error, isLoading } = useQuery({
+    const { range } = useAnalyticRange()
+    const { data: response, error, isLoading, refetch } = useQuery({
         queryFn: async () => {
-          const response = await axios.get("/api/analytics?startDate=2023-07-24")
+          const response = await axios.get(`/api/analytics?startDate=${range.startDate}&endDate=${range.endDate}`)
           return response.data
         },
-        queryKey: ["analytics-details"]
+        queryKey: ["analytics-details", range]
     })
+
+    useEffect(() => {
+      console.log('REFETCH', range)
+    }, [range])
 
     if(error) return <>Error</>
 

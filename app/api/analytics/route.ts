@@ -36,8 +36,9 @@ export async function GET(
     const attendancesRatioForWorkingDays = totalAttendancesForWorkingDays ? attendancesForWorkingDays / totalAttendancesForWorkingDays : 0
     const absencesRatioForWorkingDays = totalAttendancesForWorkingDays ? 1 - attendancesRatioForWorkingDays : 0
     const workingHours = await analytics.workingHoursInRange(startDate, endDate)
+    const totalWorkingHours = workingHours * totalAgent
     const agentsWorkingHoursInRange = await analytics.agentsWorkingHoursInRange(startDate, endDate)
-    const workingHoursRatio = workingHours ? agentsWorkingHoursInRange.totalHours / workingHours : 0
+    const workingHoursRatio = totalWorkingHours ? agentsWorkingHoursInRange.totalHours / totalWorkingHours : 0
 
     try {
         const data = {
@@ -45,7 +46,7 @@ export async function GET(
             attendances: attendances,
             absences: absencesForWorkingDays,
             visits: visits,
-            workingHours: workingHours,
+            workingHours: totalWorkingHours,
             workingDays: workingDays.length,
             attendancesRatio: attendancesRatioForWorkingDays,
             absencesRatio: absencesRatioForWorkingDays,
