@@ -3,7 +3,8 @@ import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
 import { Access, AgentCredential, agentCredentialSchema, visitSchema } from "@/data/schema";
-import { isToday } from "@/lib/utilServer";
+import { Analytics, isToday } from "@/lib/utilServer";
+import { addDays } from "date-fns";
 
 export async function GET(
     req: NextRequest
@@ -16,27 +17,18 @@ export async function GET(
         errors: [{ message: "Please sign in" }]
     }, { status: 401 })
 
-    try {
-        const visites = await prisma.visit.findMany({
-            where: { 
-                organisationId: session.user.organisationId
-            },
-            orderBy: {
-                entryTime: 'desc'
-            },
-        })
+    const url = new URL(req.url)
+    const dateString = url.searchParams.get('date')
+    const date = dateString ? new Date(dateString) : new Date()
 
-        const accesses = await prisma.access.findMany({
-            where: { 
-                organisationId: session.user.organisationId
-            },
-            orderBy: {
-                entryTime: 'desc'
-            },
-            include: {
-                agent: true
-            }
-        })
+    const startDate = date
+    const endDate = addDays(date, 1)
+
+    try {
+        const analytics = new Analytics(session.user.organisationId)
+
+        const visites = await analytics.visitsInRange(startDate, endDate)
+        const accesses = await analytics.accessInRange(startDate, endDate)
 
         const visiteData: Array<Access> = visites.map((access) => {
                 return {

@@ -142,6 +142,28 @@ export class Analytics {
         })
     }
 
+    async visitsInRange(startDate: Date, endDate: Date) {
+        return prisma.visit.findMany({
+            where: {
+                AND: [
+                    {
+                        organisationId: this.organisationId
+                    },
+                    {
+                        entryTime: {
+                            gte: startDate
+                        }
+                    },
+                    {
+                        entryTime: {
+                            lte: endDate
+                        }
+                    }
+                ]
+            }
+        })
+    }
+
     async countAccessInRange(startDate: Date, endDate: Date) {
         return (await this.accessInRange(startDate, endDate)).length
     }
@@ -168,6 +190,9 @@ export class Analytics {
                         }
                     }
                 ]
+            },
+            include: {
+                agent: true
             }
         })
     }
