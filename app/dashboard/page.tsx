@@ -1,14 +1,6 @@
 import { Metadata } from "next"
-import { Button } from "@/components/ui/button"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import { CalendarDateRangePicker } from "@/components/ui/calendarDateRangePicker"
-import { Overview } from "@/components/overview"
-import { Analytics } from "@/components/analytics"
+import StatHeader from "@/components/statHeader"
+import StatContent from "@/components/statContent"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -22,29 +14,8 @@ export default function DashboardPage() {
         <div className="w-full bg-slate-900 h-60">
         </div>
         <div className="flex-1 container space-y-4 pt-6 -mt-52">
-          <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl text-slate-300 font-bold tracking-tight">Dashboard</h2>
-            <div className="flex items-center space-x-2">
-              <CalendarDateRangePicker />
-              <Button className="bg-green-600 hover:bg-green-400">Download</Button>
-            </div>
-          </div>
-          <Tabs defaultValue="overview" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="overview">
-                Overview
-              </TabsTrigger>
-              <TabsTrigger value="analytics">
-                Analytics
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="overview" className="space-y-4">
-              <Overview />
-            </TabsContent>
-            <TabsContent value="analytics" className="space-y-4">
-              <Analytics />
-            </TabsContent>
-          </Tabs>
+          <StatHeader />
+          <StatContent />
         </div>
       </div>
     </>
