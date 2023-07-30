@@ -18,10 +18,10 @@ import { useQuery } from "react-query"
 export function Analytics() {
     const { data: response, error, isLoading } = useQuery({
         queryFn: async () => {
-          const response = await axios.get("/api/analytics")
+          const response = await axios.get("/api/analytics?startDate=2023-07-24")
           return response.data
         },
-        queryKey: ["analytics"]
+        queryKey: ["analytics-details"]
     })
 
     if(error) return <>Error</>

@@ -16,8 +16,13 @@ export async function GET(
         errors: [{ message: "Please sign in" }]
     }, { status: 401 })
 
-    const startDate = addDays(new Date(), -1)
-    const endDate = addDays(new Date(), 0)
+    const url = new URL(req.url)
+
+    const starDateString = url.searchParams.get('startDate')
+    const endDateString = url.searchParams.get('endDate')
+
+    const startDate = starDateString ? new Date(starDateString) : addDays(new Date(), -1)
+    const endDate = endDateString ? new Date(endDateString) : addDays(new Date(), 0)
 
     const analytics = new Analytics(session.user.organisationId)
 
