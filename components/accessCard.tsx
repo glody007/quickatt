@@ -31,7 +31,7 @@ export function AccessCard() {
           <CardHeader>
             <CardTitle>Agent</CardTitle>
             <CardDescription>
-              Enter your agent pin. Click save when you're done.
+              Enter your agent pin. Click save when you&apos;re done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -44,7 +44,7 @@ export function AccessCard() {
           <CardHeader>
             <CardTitle>Visitor</CardTitle>
             <CardDescription>
-              Enter your informations here. Click save when you're done.
+              Enter your informations here. Click save when you&apos;re done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">

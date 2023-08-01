@@ -9,57 +9,6 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 import { z } from "zod"
 import Loading from "./loading"
 
-const data = [
-  {
-    name: "16 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "17 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "18 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "19 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "20 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "22 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "23 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "45 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "25 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "26 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "27 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-  {
-    name: "28 Jan",
-    total: Math.floor(Math.random() * 45),
-  },
-]
-
 export function AttendanceRange() {
   const { range } = useAnalyticRange()
   const { data: response, error, isLoading } = useQuery({

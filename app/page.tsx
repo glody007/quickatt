@@ -44,10 +44,10 @@ export default async function AuthenticationPage() {
                 &ldquo;This attendance and visitor record app has been a 
                 lifesaver! Keeping track of both attendance and visitors can 
                 be a real challenge, but this app has made it so much easier. 
-                It's like having a dedicated assistant at my fingertips. 
+                It&apos;s like having a dedicated assistant at my fingertips. 
                 I can effortlessly monitor attendance for my team and also 
                 manage visitor sign-ins seamlessly. 
-                The app's user-friendly interface and efficient features have 
+                The app&apos;s user-friendly interface and efficient features have 
                 saved me countless hours, making my job a whole lot smoother. 
                 Now, I can focus on providing a welcoming and organized environment 
                 for everyone. If you need a reliable solution for attendance 

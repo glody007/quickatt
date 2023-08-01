@@ -48,6 +48,7 @@ export function MainNav() {
                     <ul className="flex">
                         {items.map((item) => (
                             <li 
+                                key={item.name}
                                 onClick={() => navigate(item.link)}
                                 className={cn(
                                     "cursor-pointer text-slate-300 p-4 hover:bg-slate-600",

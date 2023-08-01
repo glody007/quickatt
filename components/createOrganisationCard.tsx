@@ -24,7 +24,7 @@ export function CreateOrganisationCard() {
     <Card className="w-[350px]">
       <CardHeader>
         <CardTitle>Create organisation</CardTitle>
-        <CardDescription>Fill your organisation's informations.</CardDescription>
+        <CardDescription>Fill your organisation&apos;s informations.</CardDescription>
       </CardHeader>
       <CardContent>
         <OrganisationForm onSuccess={handleSuccess} />
