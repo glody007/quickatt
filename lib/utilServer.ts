@@ -56,9 +56,11 @@ export function scheduleDurationInHour(schedule: Schedule) {
 
 export class Analytics {
     organisationId: string;
+    agentId?: string;
 
     constructor(organisationId: string, agentId?: string) {
         this.organisationId = organisationId
+        this.agentId = agentId
     }
 
     async schedulesInRange(start: Date, end: Date) {
@@ -117,7 +119,11 @@ export class Analytics {
     }
 
     async countAgent() {
-        return prisma.agent.count()
+        return prisma.agent.count({
+            where: {
+                id: this.agentId
+            }
+        })
     }
 
     async countVisitsInRange(startDate: Date, endDate: Date) {
@@ -191,6 +197,9 @@ export class Analytics {
                         entryTime: {
                             lte: endDate
                         }
+                    },
+                    {
+                        agentId: this.agentId
                     }
                 ]
             },

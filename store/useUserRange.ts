@@ -14,7 +14,7 @@ interface UserRange {
 
 export const useUserRange = create<UserRange>((set) => ({
     range: {
-        startDate: formatDateYMD(addDays(new Date(), -7)),
+        startDate: formatDateYMD(addDays(new Date(), -6)),
         endDate: formatDateYMD(new Date())
     },
     selectRange: (range: Range) => set((state) => ({ range }))

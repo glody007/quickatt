@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card"
 import { Agent, analyticsSchema } from "@/data/schema";
 import { cn } from "@/lib/utils";
+import { useAgent } from "@/store/useAgent";
 import { useUserRange } from "@/store/useUserRange";
 import axios from "axios";
 import { format } from "date-fns";
@@ -24,12 +25,13 @@ interface Props extends HtmlHTMLAttributes<HTMLDivElement> {
 
 export default function UserInfo({ agent, className }: Props) {
     const { range } = useUserRange()
+
     const { data: response, error, isLoading } = useQuery({
         queryFn: async () => {
-          const response = await axios.get(`/api/analytics?startDate=${range.startDate}&endDate=${range.endDate}`)
+          const response = await axios.get(`/api/analytics?startDate=${range.startDate}&endDate=${range.endDate}&agent=${agent.id}`)
           return response.data
         },
-        queryKey: ["user-details", range]
+        queryKey: ["user-details", range, agent]
     })
 
     if(error) return <>Error</>
@@ -51,14 +53,14 @@ export default function UserInfo({ agent, className }: Props) {
                     />
                     <UserInfoOverviewCard 
                         title="Working Hours" 
-                        info={`${analytics.workingHoursVolume}h - ${(analytics.workingHoursRatio * 100).toFixed(2)}%`}
+                        info={`${analytics.workingHoursVolume.toFixed(2)}h - ${(analytics.workingHoursRatio * 100).toFixed(2)}%`}
                         className="flex-[0.4]"
                     />
                 </div>
                 <div className="flex justify-between">
                     <UserInfoOverviewCard 
                         title="Presences / Working days" 
-                        info={`${analytics.attendances} / ${analytics.workingDays}`}
+                        info={`${analytics.attendancesForWorkingDays} / ${analytics.workingDays}`}
                         className="flex-[0.6]"
                     />
                     <UserInfoOverviewCard 

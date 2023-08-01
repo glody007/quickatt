@@ -20,11 +20,12 @@ export async function GET(
 
     const starDateString = url.searchParams.get('startDate')
     const endDateString = url.searchParams.get('endDate')
+    const agentId = url.searchParams.get('agent') || undefined
 
     const startDate = starDateString ? new Date(starDateString) : addDays(new Date(), -1)
     const endDate = endDateString ? new Date(endDateString) : addDays(new Date(), 0)
 
-    const analytics = new Analytics(session.user.organisationId)
+    const analytics = new Analytics(session.user.organisationId, agentId)
 
     const totalAgent = await analytics.countAgent()
     const visits = await analytics.countVisitsInRange(startDate, endDate, )
@@ -44,6 +45,7 @@ export async function GET(
         const data = {
             totalAgent: totalAgent,
             attendances: attendances,
+            attendancesForWorkingDays: attendancesForWorkingDays,
             absences: absencesForWorkingDays,
             visits: visits,
             workingHours: totalWorkingHours,

@@ -68,6 +68,7 @@ export const analyticsSchema = z.object({
   totalAgent: z.number(),
   attendances: z.number(),
   absences: z.number(),
+  attendancesForWorkingDays: z.number(),
   visits: z.number(),
   workingHours: z.number(),
   workingDays: z.number(),
