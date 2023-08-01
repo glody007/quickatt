@@ -9,7 +9,7 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 import { z } from "zod"
 import Loading from "./loading"
 
-export function AttendanceRange() {
+export function AttendanceAnalytic() {
   const { range } = useAnalyticRange()
   const { data: response, error, isLoading } = useQuery({
     queryFn: async () => {

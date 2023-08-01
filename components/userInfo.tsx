@@ -9,14 +9,13 @@ import {
 } from "@/components/ui/card"
 import { Agent, analyticsSchema } from "@/data/schema";
 import { cn } from "@/lib/utils";
-import { useAgent } from "@/store/useAgent";
 import { useUserRange } from "@/store/useUserRange";
 import axios from "axios";
 import { format } from "date-fns";
 import { HtmlHTMLAttributes } from "react";
 import { useQuery } from "react-query";
+import { AttendanceUserAnalytic } from "./attendanceUserAnalytic";
 import Loading from "./loading";
-import { OverviewYearWorkingHour } from "./overviewYearWorkingHour";
 import UserInfoOverviewCard from "./userInfoOverviewCard";
 
 interface Props extends HtmlHTMLAttributes<HTMLDivElement> {
@@ -77,7 +76,7 @@ export default function UserInfo({ agent, className }: Props) {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pl-2">
-                    <OverviewYearWorkingHour />
+                    <AttendanceUserAnalytic />
                   </CardContent>
                 </Card>
             </div>

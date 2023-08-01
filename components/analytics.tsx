@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card"
 import { Hourglass, ListChecks, Sunrise, UserCog } from "lucide-react"
 import { WorkingHourRange } from "./workingHourRange"
-import { AttendanceRange } from "./attendanceRange"
+import { AttendanceAnalytic } from "./attendanceAnalytic"
 import axios from "axios"
 import Loading from "./loading"
 import { analyticsSchema } from "@/data/schema"
@@ -107,7 +107,7 @@ export function Analytics() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pl-2">
-                    <AttendanceRange />
+                    <AttendanceAnalytic />
                   </CardContent>
                 </Card>
                 <Card className="col-span-3">
