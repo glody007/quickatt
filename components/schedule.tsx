@@ -9,11 +9,15 @@ import Loading from "./loading";
 import { z } from "zod";
 import ScheduleItem from "./scheduleItem";
 
+// TODO: FIX GRID
+
 interface Props extends HtmlHTMLAttributes<HTMLDivElement> {
     
 }
 
+// TODO: SHOW HOURS
 const getHourFromIndex = (index: number) => {
+    return ""
     const hour = index % 12
     if(index === 12) return `12 AM`
     if(index < 12) return `${hour} AM`
