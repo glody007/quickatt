@@ -51,19 +51,19 @@ export default function UserInfo({ agent, className }: Props) {
                     />
                     <UserInfoOverviewCard 
                         title="Working Hours" 
-                        info="300 h - 80 %"
+                        info={`${analytics.workingHoursVolume}h - ${(analytics.workingHoursRatio * 100).toFixed(2)}%`}
                         className="flex-[0.4]"
                     />
                 </div>
                 <div className="flex justify-between">
                     <UserInfoOverviewCard 
                         title="Presences / Working days" 
-                        info="40 / 50"
+                        info={`${analytics.attendances} / ${analytics.workingDays}`}
                         className="flex-[0.6]"
                     />
                     <UserInfoOverviewCard 
                         title="Absences / Working days" 
-                        info="10 / 50"
+                        info={`${analytics.absences} / ${analytics.workingDays}`}
                         className="flex-[0.4]"
                     />
                 </div>
