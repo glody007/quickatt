@@ -54,6 +54,10 @@ export function scheduleDurationInHour(schedule: Schedule) {
     return (endMinute - startMinute) / 60
 }
 
+export function formatDateYMD(date: Date) {
+    return format(date, "yyyy-MM-dd")
+}
+
 export class Analytics {
     organisationId: string;
     agentId?: string;
@@ -229,16 +233,35 @@ export class Analytics {
         }, 0)
     }
 
+    async agentsAttendancesInRange(start: Date, end: Date) {
+        const accessForWorkingDaysInRange = await this.accessForWorkingDaysInRange(start, end)
+        const attendancesForDaysMap = new Map<string, number>()
+        let totalAttendances = 0
+        accessForWorkingDaysInRange.forEach(access => {
+            const currentValue = attendancesForDaysMap.get(formatDateYMD(access.entryTime)) || 0
+            attendancesForDaysMap.set(formatDateYMD(access.entryTime), currentValue + 1)
+            totalAttendances += 1
+        })
+        const attendancesForDaysList = Array.from(attendancesForDaysMap.entries()).map(entry => ({
+            day: entry[0],
+            attendances: entry[1]
+        }))
+        return {
+            totalAttendances: totalAttendances,
+            daysAttendances: attendancesForDaysList
+        }
+    }
+
     async agentsWorkingHoursInRange(start: Date, end: Date) {
         const workingHoursForDaysInWeek = this.workingHoursForDaysInWeek(start, end)
         const accessForWorkingDaysInRange = await this.accessForWorkingDaysInRange(start, end)
         const workingHoursForDaysMap = new Map<string, number>()
         let totalHours = 0
         accessForWorkingDaysInRange.forEach(access => {
-            const currentValue = workingHoursForDaysMap.get(format(access.entryTime, "PPP")) || 0
+            const currentValue = workingHoursForDaysMap.get(formatDateYMD(access.entryTime)) || 0
             const accessDuration = access.exitTime ? differenceInMinutes(access.exitTime, access.entryTime) / 60 : 0
             const sum = currentValue + accessDuration
-            workingHoursForDaysMap.set(format(access.entryTime, "PPP"), sum)
+            workingHoursForDaysMap.set(formatDateYMD(access.entryTime), sum)
             totalHours += accessDuration
         })
         const workingHoursForDaysList = Array.from(workingHoursForDaysMap.entries()).map(entry => ({

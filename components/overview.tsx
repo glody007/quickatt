@@ -28,7 +28,7 @@ export function Overview() {
     if(error) return <>Error</>
 
     if(isLoading) return <Loading />
-
+    
     const analytics = analyticsSchema.parse(response.data)
 
     return (
@@ -96,7 +96,7 @@ export function Overview() {
                   <CardHeader>
                     <CardTitle>Overview</CardTitle>
                     <CardDescription>
-                        Working hours for this year.
+                        Working hours for last 7 days.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pl-2">

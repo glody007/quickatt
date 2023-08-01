@@ -64,6 +64,16 @@ export const accessSchema = z.object({
   exitTime: z.coerce.date().optional(),
 })
 
+export const dayWorkingHoursSchema = z.object({
+  day: z.coerce.date(),
+  hours: z.number()
+})
+
+export const dayAttendancesSchema = z.object({
+  day: z.coerce.date(),
+  attendances: z.number()
+})
+
 export const analyticsSchema = z.object({
   totalAgent: z.number(),
   attendances: z.number(),

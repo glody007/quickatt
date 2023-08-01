@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import { authOptions } from "@/lib/auth";
 import { addDays } from "date-fns";
-import { Analytics } from "@/lib/utilServer";
+import { Analytics, formatDateYMD } from "@/lib/utilServer";
 
 export async function GET(
     req: NextRequest
@@ -22,7 +22,8 @@ export async function GET(
     const endDateString = url.searchParams.get('endDate')
     const agentId = url.searchParams.get('agent') || undefined
 
-    const startDate = starDateString ? new Date(starDateString) : addDays(new Date(), -1)
+    const today = new Date(formatDateYMD(new Date()))
+    const startDate = starDateString ? new Date(starDateString) : addDays(today, 0)
     const endDate = endDateString ? new Date(endDateString) : addDays(new Date(), 0)
 
     const analytics = new Analytics(session.user.organisationId, agentId)
